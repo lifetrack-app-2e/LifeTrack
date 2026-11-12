@@ -1,0 +1,671 @@
+
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>LifeTrack</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f7fb;--sf:#fff;--tx:#1e1b4b;--mu:#6b7280;--bd:#e5e7eb;--pr:#4f46e5;--vi:#7c3aed;--ok:#22c55e;--wa:#f59e0b;--ex:#d1d5db}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1020;--sf:#181a30;--tx:#eef;--mu:#9aa0b8;--bd:#2a2d4a;--ex:#3a3d5c}}
+:root[data-theme=dark]{--bg:#0f1020;--sf:#181a30;--tx:#eef;--mu:#9aa0b8;--bd:#2a2d4a;--ex:#3a3d5c}
+:root[data-theme=ocean]{--bg:#eaf6fb;--sf:#fff;--tx:#123047;--mu:#547184;--bd:#cfe3ed;--pr:#087ea4;--vi:#16a6a1;--ok:#15966b;--wa:#e6a23c;--ex:#d5e5eb}
+:root[data-theme=forest]{--bg:#eef5ef;--sf:#fff;--tx:#20392a;--mu:#647969;--bd:#d5e3d7;--pr:#28734a;--vi:#77a85b;--ok:#2e9b5f;--wa:#d99a32;--ex:#d9e4da}
+:root[data-theme=sunset]{--bg:#fff4ed;--sf:#fff;--tx:#482b27;--mu:#8c6860;--bd:#f1d8cb;--pr:#e16b42;--vi:#b84d78;--ok:#32966b;--wa:#e8a33e;--ex:#ead8d0}
+:root[data-theme=rose]{--bg:#fff1f5;--sf:#fff;--tx:#482638;--mu:#8c6879;--bd:#f0d5e0;--pr:#d94f83;--vi:#9b5de5;--ok:#299b72;--wa:#e7a13c;--ex:#ead9e1}
+:root[data-theme=lavender]{--bg:#f5f1ff;--sf:#fff;--tx:#30234c;--mu:#75688d;--bd:#e1d8f2;--pr:#7955c7;--vi:#ad69cf;--ok:#329b75;--wa:#e3a13c;--ex:#e3ddef}
+:root[data-theme=midnight]{--bg:#101827;--sf:#192438;--tx:#edf3ff;--mu:#9aaac2;--bd:#2c3b53;--pr:#4f9cf9;--vi:#9b7bff;--ok:#38c995;--wa:#f3b84b;--ex:#34445c}
+:root[data-theme=emerald]{--bg:#edf8f5;--sf:#fff;--tx:#163c36;--mu:#5c7b75;--bd:#cfe8e1;--pr:#07866e;--vi:#4aa98e;--ok:#15966b;--wa:#e4a13b;--ex:#d6e8e2}
+:root[data-theme=contrast]{--bg:#fff;--sf:#f7f7f7;--tx:#111;--mu:#454545;--bd:#bdbdbd;--pr:#1d4ed8;--vi:#6d28d9;--ok:#15803d;--wa:#b45309;--ex:#d1d5db}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif;overflow-x:hidden}
+#app{display:flex;min-height:100vh}
+nav{width:220px;background:var(--sf);border-right:1px solid var(--bd);padding:16px 12px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh;transition:width .2s}
+nav.c{width:68px}nav.c .l,nav.c .brand span,nav.c .me div{display:none}
+.brand{font-weight:700;font-size:18px;display:flex;gap:8px;align-items:center;padding:6px 8px 14px;color:var(--pr)}
+nav button{all:unset;cursor:pointer;display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;color:var(--mu);font-weight:500}
+nav button:hover{background:var(--bg)}nav button.on{background:linear-gradient(135deg,var(--pr),var(--vi));color:#fff}
+nav .sp{flex:1}.me{display:flex;gap:10px;align-items:center;padding:10px;border-bottom:1px solid var(--bd);font-size:13px;cursor:pointer;border-radius:12px;transition:background 0.2s}
+.me:hover{background:var(--bg)}
+.av{width:34px;height:34px;border-radius:50%;background:var(--vi);color:#fff;display:grid;place-items:center;font-weight:600;flex:none;overflow:hidden}
+main{flex:1;min-width:0;padding:24px;max-width:1200px;margin:0 auto}
+h1{margin:0 0 4px;font-size:24px}h2{font-size:17px;margin:0 0 12px}
+.mu{color:var(--mu);font-size:13px}.q{font-style:italic}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:18px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.g{display:grid;gap:14px;margin:16px 0}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+.big{font-size:30px;font-weight:700}
+.hero{background:linear-gradient(135deg,var(--pr),var(--vi));color:#fff;border:0}
+button.b,select,input,textarea{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:8px 12px}
+button.b{cursor:pointer;min-height:40px}button.p{background:var(--pr);color:#fff;border:0}button.d{color:#dc2626}
+input[type=checkbox]{width:22px;height:22px;accent-color:var(--ok)}input[type=range]{padding:0}
+textarea{width:100%;min-height:70px}label{display:block;font-size:13px;color:var(--mu);margin:8px 0 2px}
+dialog label+input,dialog label+select,dialog label+textarea{width:100%}
+dialog{border:1px solid var(--bd);border-radius:18px;background:var(--sf);color:var(--tx);width:min(420px,92vw)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row.sb{justify-content:space-between}
+.hc{display:flex;gap:12px;align-items:center}.ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;flex:none}
+.bar{height:8px;background:var(--bd);border-radius:9px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;border-radius:9px;transition:width .4s}
+.sw{display:inline-block;width:26px;height:26px;border-radius:50%;cursor:pointer;margin:2px;border:3px solid transparent}.sw.on{border-color:var(--tx)}
+.hm{overflow-x:auto;margin-bottom:12px}.hm table{border-collapse:separate;border-spacing:2px}
+.hm th{font-size:10px;color:var(--mu);font-weight:500;min-width:22px;text-align:center}.hm th.n{text-align:left;min-width:110px;position:sticky;left:0;background:var(--sf)}
+.hm td.n{font-size:12px;white-space:nowrap;position:sticky;left:0;background:var(--sf);padding-right:6px}
+.cl{width:20px;height:20px;border-radius:5px;border:0;padding:0;background:transparent;display:block;border:1px solid var(--bd);margin:0 auto}
+.cl.d{background:var(--ok);border-color:var(--ok)}.cl.m{background:var(--wa);border-color:var(--wa)}.cl.x{background:var(--ex);border-color:var(--ex)}.cl{cursor:pointer}
+.tag{font-size:11px;padding:2px 8px;border-radius:99px;font-weight:600}
+.hi{background:#dcfce7;color:#166534}.me2{background:#fef3c7;color:#92400e}.lo{background:#fee2e2;color:#991b1b}
+svg text{fill:var(--mu);font-size:10px}
+.bn{display:none}
+.mobile-profile{display:none}.mobile-head{display:none}
+.hidden{display:none !important}
+.f-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:var(--bg);padding:20px;z-index:9990;position:fixed;inset:0;overflow-y:auto}
+.f-screen .card{width:100%;max-width:440px;text-align:center;margin:auto}
+@media(max-width:860px){.g4{grid-template-columns:repeat(2,1fr)}.g3,.g2{grid-template-columns:1fr}main{padding:16px 14px 90px}
+nav{display:none}.mobile-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;padding:4px 2px}.mobile-head .brand{padding:4px 0;color:var(--pr);font-size:18px}.mobile-head .profile{display:flex;align-items:center;gap:8px;color:var(--tx);font-weight:600;text-decoration:none;min-width:0}.mobile-head .profile span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bn{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--sf);border-top:1px solid var(--bd);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));z-index:5;justify-content:space-around}
+.bn button{all:unset;cursor:pointer;display:flex;flex:1;min-width:0;flex-direction:column;align-items:center;font-size:10px;color:var(--mu);padding:4px 2px;white-space:nowrap}.bn button.on{color:var(--pr);font-weight:600}.bn span{font-size:20px}.bn .bn-label{max-width:100%;overflow:hidden;text-overflow:ellipsis;font-size:9px}}
+</style></head><body>
+
+<div id="login-screen" class="f-screen hidden">
+  <div class="card">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
+      <select id="lang-sel-login" data-c="lang" style="font-size:12px;padding:4px">
+        <option value="en">English</option>
+        <option value="ksw">Sgaw Karen</option>
+        <option value="th">ภาษาไทย</option>
+        <option value="my">မြန်မာ</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="pt">Português</option>
+        <option value="id">Bahasa Indonesia</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+        <option value="ar">العربية</option>
+        <option value="hi">हिन्दी</option>
+      </select>
+    </div>
+    <div class="brand" style="justify-content:center;font-size:24px;margin-bottom:8px">🌱 <span>LifeTrack</span></div>
+    <p class="mu" id="t-login-sub" style="margin-bottom: 24px;">Log in to your account</p><p class="mu" style="font-size:11px">Prototype account: this version stores your profile in this browser only. It is not yet secure cloud authentication.</p>
+    <form id="login-form">
+      <label id="t-email" style="text-align: left;">Email Address</label>
+      <input type="email" id="login-email" required placeholder="you@example.com" style="width: 100%; margin-bottom: 16px;">
+      <label id="t-pwd" style="text-align: left;">Password</label>
+      <input type="password" id="login-pwd" required placeholder="••••••••" style="width: 100%; margin-bottom: 24px;">
+      <button type="submit" class="b p" id="t-logbtn" style="width: 100%; font-weight: 600;">Log In</button>
+    </form>
+  </div>
+</div>
+
+<div id="app" class="hidden"><nav id="nav"></nav><main id="main"></main></div><div class="bn hidden" id="bn"></div>
+<dialog id="dlg"></dialog>
+
+<script>
+const $=s=>document.querySelector(s),p=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
+const T=new Date();T.setHours(0,0,0,0);const TD=ymd(T);
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+
+const dict = {
+  en: { 
+    nav: ['Overview', 'Daily Habits', 'Annual Tracker', 'Analytics', 'Goals', 'Journal', 'Premium'],
+    hello: 'Hello! Ready to become a better version of yourself?',
+    loginSub: 'Log in to your account', email: 'Email Address', pwd: 'Password', logBtn: 'Log In',
+    setProfile: 'Profile Details', setLang: 'Language', setPhoto: 'Change Photo', setPhotoSub: 'Tap avatar to upload', setSave: 'Save Profile'
+  },
+  ksw: {
+    nav: ['တၢ်ကွၢ်ကဒါ', 'တၢ်မၤလၢ်တနံၤ', 'နံၣ်အကတီၢ်', 'တၢ်သမံသမိး', 'တၢ်တိာ်ပာ်', 'လံာ်မဲာ်ဖျၢၣ်', 'Premium'],
+    hello: 'မၤဃုာ်! နကဲထီၣ်ပှၤဂ့ၤဒိၣ်မးဧါ.',
+    loginSub: 'နုာ်လီၤဆူ နအ့ကီၢ်', email: 'အံမ့လး', pwd: 'တၢ်အိးဟူး', logBtn: 'နုာ်လီၤ',
+    setProfile: 'တၢ်ဂ့ၢ်တၢ်ကျိၤ', setLang: 'ကျိာ်', setPhoto: 'ဆီတလဲ တၢ်ဂီၤ', setPhotoSub: 'ဆီၣ်တၢ်ဂီၤလၢ ကဆှၢထီၣ်', setSave: 'ပာ်ဃာ်'
+  },
+  th: {
+    nav: ['ภาพรวม', 'นิสัยประจำวัน', 'ตัวติดตามรายปี', 'การวิเคราะห์', 'เป้าหมาย', 'บันทึก', 'พรีเมียม'],
+    hello: 'สวัสดี! พร้อมที่จะเป็นเวอร์ชั่นที่ดีกว่าของคุณหรือยัง?',
+    loginSub: 'เข้าสู่ระบบบัญชีของคุณ', email: 'อีเมล', pwd: 'รหัสผ่าน', logBtn: 'เข้าสู่ระบบ',
+    setProfile: 'รายละเอียดโปรไฟล์', setLang: 'ภาษา', setPhoto: 'เปลี่ยนรูปภาพ', setPhotoSub: 'แตะรูปโปรไฟล์เพื่ออัปโหลด', setSave: 'บันทึกโปรไฟล์'
+  },
+  my: {
+    nav: ['အကျဉ်းချုပ်', 'နေ့စဉ်အလေ့အကျင့်', 'နှစ်စဉ်မှတ်တမ်း', 'ခွဲခြမ်းစိတ်ဖြာခြင်း', 'ပန်းတိုင်များ', 'ဒိုင်ယာရီ', 'Premium'],
+    hello: 'မင်္ဂလာပါ! ပိုမိုကောင်းမွန်တဲ့ သင်ဖြစ်လာဖို့ အဆင်သင့်ပဲလား။',
+    loginSub: 'အကောင့်ဝင်ရန်', email: 'အီးမေးလ်', pwd: 'စကားဝှက်', logBtn: 'ဝင်မည်',
+    setProfile: 'ပရိုဖိုင်အချက်အလက်', setLang: 'ဘာသာစကား', setPhoto: 'ဓာတ်ပုံပြောင်းရန်', setPhotoSub: 'တင်ရန် ပုံကို နှိပ်ပါ', setSave: 'သိမ်းဆည်းပါ'
+  },
+  es: {
+    nav: ['Resumen', 'Hábitos diarios', 'Seguimiento anual', 'Análisis', 'Objetivos', 'Diario', 'Premium'],
+    hello: '¡Hola! ¿Listo para convertirte en una mejor versión de ti?',
+    loginSub: 'Inicia sesión en tu cuenta', email: 'Correo electrónico', pwd: 'Contraseña', logBtn: 'Iniciar sesión',
+    setProfile: 'Datos del perfil', setLang: 'Idioma', setPhoto: 'Cambiar foto', setPhotoSub: 'Toca el avatar para subir una foto', setSave: 'Guardar perfil'
+  },
+  fr: {
+    nav: ['Aperçu', 'Habitudes quotidiennes', 'Suivi annuel', 'Analyses', 'Objectifs', 'Journal', 'Premium'],
+    hello: 'Bonjour ! Prêt à devenir une meilleure version de vous-même ?',
+    loginSub: 'Connectez-vous à votre compte', email: 'Adresse e-mail', pwd: 'Mot de passe', logBtn: 'Se connecter',
+    setProfile: 'Détails du profil', setLang: 'Langue', setPhoto: 'Changer la photo', setPhotoSub: 'Touchez l’avatar pour importer une photo', setSave: 'Enregistrer le profil'
+  },
+  de: {
+    nav: ['Übersicht', 'Tägliche Gewohnheiten', 'Jahresübersicht', 'Analysen', 'Ziele', 'Tagebuch', 'Premium'],
+    hello: 'Hallo! Bereit, eine bessere Version deiner selbst zu werden?',
+    loginSub: 'Melde dich bei deinem Konto an', email: 'E-Mail-Adresse', pwd: 'Passwort', logBtn: 'Anmelden',
+    setProfile: 'Profildetails', setLang: 'Sprache', setPhoto: 'Foto ändern', setPhotoSub: 'Tippe auf den Avatar, um ein Foto hochzuladen', setSave: 'Profil speichern'
+  },
+  pt: {
+    nav: ['Visão geral', 'Hábitos diários', 'Acompanhamento anual', 'Análises', 'Metas', 'Diário', 'Premium'],
+    hello: 'Olá! Pronto para se tornar uma versão melhor de si?',
+    loginSub: 'Entre na sua conta', email: 'Endereço de e-mail', pwd: 'Senha', logBtn: 'Entrar',
+    setProfile: 'Detalhes do perfil', setLang: 'Idioma', setPhoto: 'Alterar foto', setPhotoSub: 'Toque no avatar para enviar uma foto', setSave: 'Salvar perfil'
+  },
+  id: {
+    nav: ['Ringkasan', 'Kebiasaan Harian', 'Pelacak Tahunan', 'Analitik', 'Sasaran', 'Jurnal', 'Premium'],
+    hello: 'Halo! Siap menjadi versi diri Anda yang lebih baik?',
+    loginSub: 'Masuk ke akun Anda', email: 'Alamat Email', pwd: 'Kata Sandi', logBtn: 'Masuk',
+    setProfile: 'Detail Profil', setLang: 'Bahasa', setPhoto: 'Ubah Foto', setPhotoSub: 'Ketuk avatar untuk mengunggah foto', setSave: 'Simpan Profil'
+  },
+  vi: {
+    nav: ['Tổng quan', 'Thói quen hằng ngày', 'Theo dõi hằng năm', 'Phân tích', 'Mục tiêu', 'Nhật ký', 'Premium'],
+    hello: 'Xin chào! Bạn đã sẵn sàng trở thành phiên bản tốt hơn của chính mình chưa?',
+    loginSub: 'Đăng nhập vào tài khoản', email: 'Địa chỉ email', pwd: 'Mật khẩu', logBtn: 'Đăng nhập',
+    setProfile: 'Chi tiết hồ sơ', setLang: 'Ngôn ngữ', setPhoto: 'Đổi ảnh', setPhotoSub: 'Chạm vào ảnh đại diện để tải ảnh lên', setSave: 'Lưu hồ sơ'
+  },
+  zh: {
+    nav: ['概览', '每日习惯', '年度追踪', '数据分析', '目标', '日记', '高级版'],
+    hello: '你好！准备好成为更好的自己了吗？',
+    loginSub: '登录你的账户', email: '电子邮箱', pwd: '密码', logBtn: '登录',
+    setProfile: '个人资料', setLang: '语言', setPhoto: '更换照片', setPhotoSub: '点击头像上传照片', setSave: '保存个人资料'
+  },
+  ja: {
+    nav: ['概要', '毎日の習慣', '年間トラッカー', '分析', '目標', '日記', 'プレミアム'],
+    hello: 'こんにちは！より良い自分になる準備はできていますか？',
+    loginSub: 'アカウントにログイン', email: 'メールアドレス', pwd: 'パスワード', logBtn: 'ログイン',
+    setProfile: 'プロフィール情報', setLang: '言語', setPhoto: '写真を変更', setPhotoSub: 'アバターをタップして写真をアップロード', setSave: 'プロフィールを保存'
+  },
+  ko: {
+    nav: ['개요', '매일 습관', '연간 추적', '분석', '목표', '일기', '프리미엄'],
+    hello: '안녕하세요! 더 나은 자신이 될 준비가 되었나요?',
+    loginSub: '계정에 로그인하세요', email: '이메일 주소', pwd: '비밀번호', logBtn: '로그인',
+    setProfile: '프로필 정보', setLang: '언어', setPhoto: '사진 변경', setPhotoSub: '아바타를 눌러 사진을 업로드하세요', setSave: '프로필 저장'
+  },
+  ar: {
+    nav: ['نظرة عامة', 'العادات اليومية', 'المتعقب السنوي', 'التحليلات', 'الأهداف', 'اليوميات', 'مميز'],
+    hello: 'مرحبًا! هل أنت مستعد لتصبح نسخة أفضل من نفسك؟',
+    loginSub: 'سجّل الدخول إلى حسابك', email: 'البريد الإلكتروني', pwd: 'كلمة المرور', logBtn: 'تسجيل الدخول',
+    setProfile: 'تفاصيل الملف الشخصي', setLang: 'اللغة', setPhoto: 'تغيير الصورة', setPhotoSub: 'اضغط على الصورة الرمزية لرفع صورة', setSave: 'حفظ الملف الشخصي'
+  },
+  hi: {
+    nav: ['अवलोकन', 'दैनिक आदतें', 'वार्षिक ट्रैकर', 'विश्लेषण', 'लक्ष्य', 'डायरी', 'प्रीमियम'],
+    hello: 'नमस्ते! क्या आप अपना बेहतर रूप बनने के लिए तैयार हैं?',
+    loginSub: 'अपने खाते में लॉग इन करें', email: 'ईमेल पता', pwd: 'पासवर्ड', logBtn: 'लॉग इन करें',
+    setProfile: 'प्रोफ़ाइल विवरण', setLang: 'भाषा', setPhoto: 'फ़ोटो बदलें', setPhotoSub: 'फ़ोटो अपलोड करने के लिए अवतार पर टैप करें', setSave: 'प्रोफ़ाइल सहेजें'
+  }
+};
+
+let LANG = localStorage.getItem('lifetrack_lang') || 'en';
+const uiLex = {
+  ksw: {
+    'Current Streak':'တၢ်မၤလၢ်ဆဲးထီၣ်လၢခဲအံၤ','Best Streak':'တၢ်မၤလၢ်ဆဲးထီၣ်အဂ့ၤကတၢၢ်','All habits done':'တၢ်မၤလၢ်ခဲလၢာ်ဝံၤလံ','Last 2 years':'ခံနံၣ်လၢအပူၤကွံာ်','Today':'တနံၤအံၤ','Consistency':'တၢ်မၤလၢ်ညီနုာ်','Last 30 days':'သီ ၃၀ လၢအပူၤကွံာ်','Today’s habits':'တနံၤအံၤအတၢ်မၤလၢ်','Add habit':'ထၢနုာ်တၢ်မၤလၢ်','Edit':'ဘှီဂ့ၤထီၣ်','Delete':'ထုးကွံာ်','Target':'တၢ်ပညိၣ်','Full year':'နံၣ်ဒီတနံၣ်','Month':'လ','Completed':'ဝံၤလံ','Missed':'တမၤဘၣ်','Excluded':'တပၣ်ဃုာ်','Future':'ကဟဲ','Year totals':'နံၣ်အတၢ်ဂံၢ်တၢ်ဒွး','Goal performance (30d)':'တၢ်ပညိၣ်အတၢ်လဲၤထီၣ် (သီ ၃၀)','Weekly completions':'တနွံအတၢ်ဝံၤ','Recovery rate':'တၢ်က့ၤစးထီၣ်အတၢ်နီၣ်','Progress':'တၢ်လဲၤထီၣ်','Best performing':'တၢ်မၤဂ့ၤကတၢၢ်','Needs improvement':'လိၣ်ဘၣ်တၢ်မၤဂ့ၤထီၣ်','New goal…':'တၢ်ပညိၣ်အသီ…','Add goal':'ထၢနုာ်တၢ်ပညိၣ်','Deadline:':'မုၢ်နံၤလၢကဝံၤ:','Daily reflection':'တနံၤအံၤတၢ်ဆိကမိၣ်','Achievements':'တၢ်မၤန့ၢ်တဖၣ်','Things to improve':'တၢ်လၢကဘၣ်မၤဂ့ၤထီၣ်','Save entry':'ပာ်ဃာ်တၢ်ကွဲး','Past entries':'တၢ်ကွဲးလၢအပူၤကွံာ်','Profile & Account':'ပှၤသုးကျဲၤဒီးအကီၢ်','Display name':'တၢ်အမံၤလၢပှၤထံၣ်','Appearance & Themes':'တၢ်ဒိးတဲာ်ဒီးတၢ်ဂီၤ','Notifications':'တၢ်ကစီၣ်ဟ့ၣ်ပလီၢ်','Habit management':'တၢ်ရဲၣ်ကျဲၤတၢ်မၤလၢ်','Data':'တၢ်ဂ့ၢ်တၢ်ကျိၤ','Account':'ကီၢ်','Export JSON':'ထုးထီၣ် JSON','Reset to demo data':'က့ၤစးထီၣ် demo တၢ်ဂ့ၢ်တၢ်ကျိၤ','Log Out':'ဟးထီၣ်','Erase all my data':'ထုးကွံာ်ယတၢ်ဂ့ၢ်ခဲလၢာ်',
+    'Choose Your Background':'ဃုထၢနတၢ်လီၢ်ခံ','Make LifeTrack beautiful with your favorite pictures.':'မၤ LifeTrack ဂ့ၤထီၣ်လၢနတၢ်ဂီၤလၢနအဲၣ်တဖၣ်။','Background image':'တၢ်ဂီၤလီၢ်ခံ','Default background':'တၢ်လီၢ်ခံအခီၣ်ထံး','Reset Background':'က့ၤစးထီၣ်တၢ်လီၢ်ခံ','Reminders':'တၢ်သ့ၣ်နီၣ်ထီၣ်','Browser notifications':'Browser တၢ်ကစီၣ်ဟ့ၣ်ပလီၢ်','Send test reminder':'ဆှၢတၢ်သ့ၣ်နီၣ်ထီၣ်လၢတၢ်မၤကွၢ်','System Default':'စနစ်အခီၣ်ထံး','Classic Light':'တၢ်ကပီၤလီၤဆီ','Classic Dark':'တၢ်ခံးလီၤဆီ','Add':'ထၢနုာ်','No reminders yet':'တၢ်သ့ၣ်နီၣ်ထီၣ်တအိၣ်ဒံးဘၣ်','Nothing scheduled today.':'တနံၤအံၤတၢ်ရဲၣ်ကျဲၤတအိၣ်ဘၣ်။','No habits yet.':'တၢ်မၤလၢ်တအိၣ်ဒံးဘၣ်။','Please give your habit a name, then press Save.':'ဟ့ၣ်လီၤနတၢ်မၤလၢ်အမံၤတမံၤ ဝံၤဒီးဆီၣ် Save တက့ၢ်။',
+    'Collapse':'မၤစှၤလီၤ','Overview':'တၢ်ကွၢ်ကဒါ','Daily Habits':'တၢ်မၤလၢ်တနံၤ','Annual Tracker':'နံၣ်အတၢ်ကွဲးနီၣ်','Analytics':'တၢ်သမံသမိး','Goals':'တၢ်တိာ်ပာ်','Journal':'လံာ်မဲာ်ဖျၢၣ်','Premium':'ပရီမံယၢၣ်','Name':'မံၤ','Description':'တၢ်ဖီၣ်ထံး','Daily target':'တနံၤအတၢ်ပညိၣ်','Schedule':'တၢ်ရဲၣ်ကျဲၤ','Reminder times':'တၢ်သ့ၣ်နီၣ်ထီၣ်အနၣ်ရံၣ်','Add time':'ထၢနုာ်နၣ်ရံၣ်','Save':'ပာ်ဃာ်','Cancel':'ပာ်ပတုာ်','Confirm':'ပာ်ဂၢၢ်ပာ်ကျၢၤ','Delete this habit and its history?':'ထုးကွံာ်တၢ်မၤလၢ်အံၤဒီးအတၢ်ကွဲးနီၣ်ခဲလၢာ်ဧါ?','Overdue':'ကွံာ်တၢ်ဆၢကတီၢ်','none':'တအိၣ်ဘၣ်','Logged in as:':'နုာ်လီၤဒ်အမ့ၢ်:','Everything is stored in this browser. Export a backup any time.':'တၢ်ဂ့ၢ်ခဲလၢာ်ဘၣ်တၢ်ပာ်ဃာ်လၢ browser အံၤအပူၤ။ ထုးထီၣ် backup ဖဲနအဲၣ်ဒိးအခါ။','In-app reminders always appear while LifeTrack is open.':'တၢ်သ့ၣ်နီၣ်ထီၣ်လၢ app အပူၤ ကဟဲဖျါဖဲ LifeTrack အိးထီၣ်အသးအခါ။','Send test reminder':'ဆှၢတၢ်သ့ၣ်နီၣ်ထီၣ်လၢတၢ်မၤကွၢ်','Habit':'တၢ်မၤလၢ်','Times':'တၢ်ဆၢကတီၢ်','No.':'နီၣ်ဂံၢ်','Full year':'နံၣ်ဒီတနံၣ်','Tap any date to cycle: Completed → Missed → Excluded → clear':'ထိးမုၢ်နံၤတမံၤမံၤ ဒ်သိးကဆီတလဲ: ဝံၤ → တမၤဘၣ် → တပၣ်ဃုာ် → မၤကဆှဲကဆှီ','Completed → Missed → Excluded → clear':'ဝံၤ → တမၤဘၣ် → တပၣ်ဃုာ် → မၤကဆှဲကဆှီ',
+    'Goal performance (30d)':'တၢ်ပညိၣ်အတၢ်လဲၤထီၣ် (သီ ၃၀)','Weekly completions':'တနွံအတၢ်ဝံၤ','Recovery rate':'တၢ်က့ၤစးထီၣ်အတၢ်နီၣ်','Share of missed days followed by a return within a week.':'မုၢ်နံၤလၢတမၤဝံၤတဖၣ်အကျါ ပှၤက့ၤမၤကဒါက့ၤလၢတနွံအတီၢ်ပူၤတဖၣ်အတၢ်နီၣ်။','Habit stability · last 12 weeks':'တၢ်မၤလၢ်အတၢ်ဂၢၢ်ကျၢၤ · တနွံ ၁၂ နွံလၢအပူၤကွံာ်','Monthly completions':'တလါတၢ်မၤဝံၤတဖၣ်','Best weekdays (12w)':'မုၢ်နံၤလၢအဂ့ၤကတၢၢ် (တနွံ ၁၂ နွံ)','Consistency trend (12w)':'တၢ်မၤညီနုာ်အတၢ်လဲၤထီၣ် (တနွံ ၁၂ နွံ)','Sun':'မုၢ်အိၣ်ဘှံး','Mon':'မုၢ်တနံၤ','Tue':'မုၢ်ခံနံၤ','Wed':'မုၢ်သၢနံၤ','Thu':'မုၢ်လွံၢ်နံၤ','Fri':'မုၢ်ယဲၢ်နံၤ','Sat':'မုၢ်ဃုနံၤ','Now':'ခဲအံၤ','High':'ထီ','Medium':'ခၢၣ်သး','Low':'ဖုၣ်','completions':'တၢ်ဝံၤတဖၣ်','days':'သီ','This week:':'တနွံအံၤ:','Month:':'လ:','Year:':'နံၣ်:','Total completed:':'တၢ်ဝံၤခဲလၢာ်:','Read 12 books this year':'ဖးလံာ် ၁၂ ဘ့ၣ်လၢနံၣ်အံၤ','Bible Reading':'ဖးလံာ်စီဆှံ','Prayer':'ဘါထုကဖၣ်','English Learning':'မၤလိအဲကလံးကျိာ်','Exercise':'မၤက့ၤတၢ်ဂဲၤလိာ်','Reading Books':'ဖးလံာ်','Studying':'မၤလိတၢ်','Drinking Water':'အီထံ','Learning New Skills':'မၤလိတၢ်သ့အသီ','Daily practice: bible reading':'မၤတၢ်လၢတနံၤဘၣ်တနံၤ: ဖးလံာ်စီဆှံ','Daily practice: prayer':'မၤတၢ်လၢတနံၤဘၣ်တနံၤ: ဘါထုကဖၣ်','Daily practice: english learning':'မၤတၢ်လၢတနံၤဘၣ်တနံၤ: မၤလိအဲကလံးကျိာ်','Daily practice: exercise':'မၤတၢ်လၢတနံၤဘၣ်တနံၤ: တၢ်ဂဲၤလိာ်','Daily practice: reading books':'မၤတၢ်လၢတနံၤဘၣ်တနံၤ: ဖးလံာ်','Daily practice: studying':'မၤတၢ်လၢတနံၤဘၣ်တနံၤ: မၤလိတၢ်','Daily practice: drinking water':'မၤတၢ်လၢတနံၤဘၣ်တနံၤ: အီထံ','Daily practice: learning new skills':'မၤတၢ်လၢတနံၤဘၣ်တနံၤ: မၤလိတၢ်သ့အသီ','20 minutes':'မိးနံး ၂၀','10 minutes':'မိးနံး ၁၀','30 minutes':'မိးနံး ၃၀','15 minutes':'မိးနံး ၁၅','60 minutes':'မိးနံး ၆၀','2 liters':'လံထၢၣ် ၂','Choose your LifeTrack theme':'ဃုထၢ LifeTrack အတၢ်ဂီၤ','Ocean Blue':'ပီၣ်လဲၣ်အဂီၤ','Forest Green':'သ့ၣ်ပှၢ်အဂၤၤ','Sunset':'မုၢ်လီၤအဂီၤ','Rose Pink':'ဖီအဂီၤ','Lavender':'ဖီလဲၣ်အဂီၤ','Midnight':'သုးမုၢ်နၤအဂီၤ','Emerald':'မြကျောက်အဂီၤ','High Contrast':'တၢ်ထံၣ်ဖျါထီၣ်ဂ့ၤ','Name':'မံၤ','Description':'တၢ်ဖီၣ်ထံး','Icon':'တၢ်ပနီၣ်','Color':'အလွဲၢ်','AM or PM':'ဂီၤခီ မ့တမ့ၢ် ဟါခီ','Morning':'ဂီၤခီ','Noon':'မုၢ်ထူၣ်','Evening':'ဟါခီ','Night':'နၤခီ','New habit':'တၢ်မၤလၢ်အသီ','Habit stability':'တၢ်မၤလၢ်အတၢ်ဂၢၢ်ကျၢၤ','Completed habits':'တၢ်မၤလၢ်လၢဝံၤတဖၣ်','LifeTrack Premium':'LifeTrack ပရီမံယၢၣ်'
+  },
+  es: {'Current Streak':'Racha actual','Best Streak':'Mejor racha','All habits done':'Todos los hábitos completados','Last 2 years':'Últimos 2 años','Today':'Hoy','Consistency':'Constancia','Last 30 days':'Últimos 30 días','Today’s habits':'Hábitos de hoy','Add habit':'Añadir hábito','Edit':'Editar','Delete':'Eliminar','Target':'Meta','Full year':'Año completo','Month':'Mes','Completed':'Completado','Missed':'Omitido','Excluded':'Excluido','Future':'Futuro','Year totals':'Totales del año','Goal performance (30d)':'Rendimiento de objetivos (30 días)','Weekly completions':'Completados por semana','Recovery rate':'Tasa de recuperación','Progress':'Progreso','Best performing':'Mejor rendimiento','Needs improvement':'Necesita mejorar','New goal…':'Nuevo objetivo…','Add goal':'Añadir objetivo','Deadline:':'Fecha límite:','Daily reflection':'Reflexión diaria','Achievements':'Logros','Things to improve':'Aspectos a mejorar','Save entry':'Guardar entrada','Past entries':'Entradas anteriores','Profile & Account':'Perfil y cuenta','Display name':'Nombre para mostrar','Appearance & Themes':'Apariencia y temas','Notifications':'Notificaciones','Habit management':'Administración de hábitos','Data':'Datos','Account':'Cuenta','Export JSON':'Exportar JSON','Reset to demo data':'Restablecer datos de demostración','Log Out':'Cerrar sesión','Erase all my data':'Borrar todos mis datos'},
+  fr: {'Current Streak':'Série actuelle','Best Streak':'Meilleure série','All habits done':'Toutes les habitudes terminées','Last 2 years':'2 dernières années','Today':'Aujourd’hui','Consistency':'Régularité','Last 30 days':'30 derniers jours','Today’s habits':'Habitudes du jour','Add habit':'Ajouter une habitude','Edit':'Modifier','Delete':'Supprimer','Target':'Objectif','Full year':'Année complète','Month':'Mois','Completed':'Terminé','Missed':'Manqué','Excluded':'Exclu','Future':'À venir','Year totals':'Totaux annuels','Goal performance (30d)':'Objectifs (30 jours)','Weekly completions':'Réalisations hebdomadaires','Recovery rate':'Taux de reprise','Progress':'Progression','Best performing':'Meilleures habitudes','Needs improvement':'À améliorer','New goal…':'Nouvel objectif…','Add goal':'Ajouter un objectif','Deadline:':'Échéance :','Daily reflection':'Réflexion quotidienne','Achievements':'Réussites','Things to improve':'À améliorer','Save entry':'Enregistrer','Past entries':'Entrées précédentes','Profile & Account':'Profil et compte','Display name':'Nom affiché','Appearance & Themes':'Apparence et thèmes','Notifications':'Notifications','Habit management':'Gestion des habitudes','Data':'Données','Account':'Compte','Export JSON':'Exporter JSON','Reset to demo data':'Réinitialiser les données de démonstration','Log Out':'Déconnexion','Erase all my data':'Effacer toutes mes données'},
+  de: {'Current Streak':'Aktuelle Serie','Best Streak':'Beste Serie','All habits done':'Alle Gewohnheiten erledigt','Last 2 years':'Letzte 2 Jahre','Today':'Heute','Consistency':'Beständigkeit','Last 30 days':'Letzte 30 Tage','Today’s habits':'Heutige Gewohnheiten','Add habit':'Gewohnheit hinzufügen','Edit':'Bearbeiten','Delete':'Löschen','Target':'Ziel','Full year':'Ganzes Jahr','Month':'Monat','Completed':'Erledigt','Missed':'Verpasst','Excluded':'Ausgeschlossen','Future':'Zukunft','Year totals':'Jahressummen','Goal performance (30d)':'Zielerfüllung (30 Tage)','Weekly completions':'Wöchentliche Erledigungen','Recovery rate':'Rückkehrrate','Progress':'Fortschritt','Best performing':'Beste Gewohnheiten','Needs improvement':'Verbesserungsbedarf','New goal…':'Neues Ziel…','Add goal':'Ziel hinzufügen','Deadline:':'Frist:','Daily reflection':'Tägliche Reflexion','Achievements':'Erfolge','Things to improve':'Verbesserungspunkte','Save entry':'Eintrag speichern','Past entries':'Frühere Einträge','Profile & Account':'Profil und Konto','Display name':'Anzeigename','Appearance & Themes':'Darstellung und Designs','Notifications':'Benachrichtigungen','Habit management':'Gewohnheiten verwalten','Data':'Daten','Account':'Konto','Export JSON':'JSON exportieren','Reset to demo data':'Demodaten zurücksetzen','Log Out':'Abmelden','Erase all my data':'Alle meine Daten löschen'},
+  pt: {'Current Streak':'Sequência atual','Best Streak':'Melhor sequência','All habits done':'Todos os hábitos concluídos','Last 2 years':'Últimos 2 anos','Today':'Hoje','Consistency':'Consistência','Last 30 days':'Últimos 30 dias','Today’s habits':'Hábitos de hoje','Add habit':'Adicionar hábito','Edit':'Editar','Delete':'Excluir','Target':'Meta','Full year':'Ano inteiro','Month':'Mês','Completed':'Concluído','Missed':'Perdido','Excluded':'Excluído','Future':'Futuro','Year totals':'Totais do ano','Goal performance (30d)':'Desempenho das metas (30 dias)','Weekly completions':'Conclusões semanais','Recovery rate':'Taxa de retomada','Progress':'Progresso','Best performing':'Melhor desempenho','Needs improvement':'Precisa melhorar','New goal…':'Nova meta…','Add goal':'Adicionar meta','Deadline:':'Prazo:','Daily reflection':'Reflexão diária','Achievements':'Conquistas','Things to improve':'Pontos a melhorar','Save entry':'Salvar registro','Past entries':'Registros anteriores','Profile & Account':'Perfil e conta','Display name':'Nome de exibição','Appearance & Themes':'Aparência e temas','Notifications':'Notificações','Habit management':'Gerenciamento de hábitos','Data':'Dados','Account':'Conta','Export JSON':'Exportar JSON','Reset to demo data':'Redefinir dados de demonstração','Log Out':'Sair','Erase all my data':'Apagar todos os meus dados'},
+  id: {'Current Streak':'Rangkaian saat ini','Best Streak':'Rangkaian terbaik','All habits done':'Semua kebiasaan selesai','Last 2 years':'2 tahun terakhir','Today':'Hari ini','Consistency':'Konsistensi','Last 30 days':'30 hari terakhir','Today’s habits':'Kebiasaan hari ini','Add habit':'Tambah kebiasaan','Edit':'Ubah','Delete':'Hapus','Target':'Target','Full year':'Setahun penuh','Month':'Bulan','Completed':'Selesai','Missed':'Terlewat','Excluded':'Dikecualikan','Future':'Mendatang','Year totals':'Total tahunan','Goal performance (30d)':'Performa target (30 hari)','Weekly completions':'Penyelesaian mingguan','Recovery rate':'Tingkat kembali','Progress':'Kemajuan','Best performing':'Performa terbaik','Needs improvement':'Perlu ditingkatkan','New goal…':'Target baru…','Add goal':'Tambah target','Deadline:':'Tenggat:','Daily reflection':'Refleksi harian','Achievements':'Pencapaian','Things to improve':'Hal yang perlu ditingkatkan','Save entry':'Simpan catatan','Past entries':'Catatan sebelumnya','Profile & Account':'Profil & Akun','Display name':'Nama tampilan','Appearance & Themes':'Tampilan & Tema','Notifications':'Notifikasi','Habit management':'Kelola kebiasaan','Data':'Data','Account':'Akun','Export JSON':'Ekspor JSON','Reset to demo data':'Atur ulang data demo','Log Out':'Keluar','Erase all my data':'Hapus semua data saya'},
+  vi: {'Current Streak':'Chuỗi hiện tại','Best Streak':'Chuỗi tốt nhất','All habits done':'Đã hoàn thành mọi thói quen','Last 2 years':'2 năm qua','Today':'Hôm nay','Consistency':'Tính đều đặn','Last 30 days':'30 ngày qua','Today’s habits':'Thói quen hôm nay','Add habit':'Thêm thói quen','Edit':'Sửa','Delete':'Xóa','Target':'Mục tiêu','Full year':'Cả năm','Month':'Tháng','Completed':'Hoàn thành','Missed':'Bỏ lỡ','Excluded':'Loại trừ','Future':'Tương lai','Year totals':'Tổng cả năm','Goal performance (30d)':'Hiệu quả mục tiêu (30 ngày)','Weekly completions':'Hoàn thành hàng tuần','Recovery rate':'Tỷ lệ quay lại','Progress':'Tiến độ','Best performing':'Tốt nhất','Needs improvement':'Cần cải thiện','New goal…':'Mục tiêu mới…','Add goal':'Thêm mục tiêu','Deadline:':'Hạn chót:','Daily reflection':'Suy ngẫm hàng ngày','Achievements':'Thành tựu','Things to improve':'Điều cần cải thiện','Save entry':'Lưu mục nhật ký','Past entries':'Mục trước đây','Profile & Account':'Hồ sơ & Tài khoản','Display name':'Tên hiển thị','Appearance & Themes':'Giao diện & Chủ đề','Notifications':'Thông báo','Habit management':'Quản lý thói quen','Data':'Dữ liệu','Account':'Tài khoản','Export JSON':'Xuất JSON','Reset to demo data':'Đặt lại dữ liệu mẫu','Log Out':'Đăng xuất','Erase all my data':'Xóa toàn bộ dữ liệu'},
+  zh: {'Current Streak':'当前连续天数','Best Streak':'最佳连续天数','All habits done':'已完成所有习惯','Last 2 years':'最近两年','Today':'今天','Consistency':'坚持度','Last 30 days':'最近30天','Today’s habits':'今日习惯','Add habit':'添加习惯','Edit':'编辑','Delete':'删除','Target':'目标','Full year':'全年','Month':'月份','Completed':'已完成','Missed':'未完成','Excluded':'已排除','Future':'未来','Year totals':'年度总计','Goal performance (30d)':'目标表现（30天）','Weekly completions':'每周完成数','Recovery rate':'恢复率','Progress':'进度','Best performing':'表现最佳','Needs improvement':'需要改进','New goal…':'新目标…','Add goal':'添加目标','Deadline:':'截止日期：','Daily reflection':'每日反思','Achievements':'成就','Things to improve':'需要改进的方面','Save entry':'保存记录','Past entries':'过往记录','Profile & Account':'个人资料与账户','Display name':'显示名称','Appearance & Themes':'外观与主题','Notifications':'通知','Habit management':'习惯管理','Data':'数据','Account':'账户','Export JSON':'导出 JSON','Reset to demo data':'重置演示数据','Log Out':'退出登录','Erase all my data':'清除我的所有数据'},
+  ja: {'Current Streak':'現在の連続記録','Best Streak':'最長連続記録','All habits done':'すべての習慣を達成','Last 2 years':'過去2年間','Today':'今日','Consistency':'継続率','Last 30 days':'過去30日間','Today’s habits':'今日の習慣','Add habit':'習慣を追加','Edit':'編集','Delete':'削除','Target':'目標','Full year':'年間','Month':'月','Completed':'完了','Missed':'未達成','Excluded':'対象外','Future':'未来','Year totals':'年間合計','Goal performance (30d)':'目標達成率（30日）','Weekly completions':'週間完了数','Recovery rate':'再開率','Progress':'進捗','Best performing':'達成率が高い習慣','Needs improvement':'改善が必要','New goal…':'新しい目標…','Add goal':'目標を追加','Deadline:':'期限：','Daily reflection':'毎日の振り返り','Achievements':'達成したこと','Things to improve':'改善したいこと','Save entry':'記録を保存','Past entries':'過去の記録','Profile & Account':'プロフィールとアカウント','Display name':'表示名','Appearance & Themes':'外観とテーマ','Notifications':'通知','Habit management':'習慣の管理','Data':'データ','Account':'アカウント','Export JSON':'JSONをエクスポート','Reset to demo data':'デモデータにリセット','Log Out':'ログアウト','Erase all my data':'すべてのデータを削除'},
+  ko: {'Current Streak':'현재 연속 기록','Best Streak':'최고 연속 기록','All habits done':'모든 습관 완료','Last 2 years':'지난 2년','Today':'오늘','Consistency':'꾸준함','Last 30 days':'지난 30일','Today’s habits':'오늘의 습관','Add habit':'습관 추가','Edit':'편집','Delete':'삭제','Target':'목표','Full year':'전체 연도','Month':'월','Completed':'완료','Missed':'놓침','Excluded':'제외','Future':'미래','Year totals':'연간 합계','Goal performance (30d)':'목표 성과 (30일)','Weekly completions':'주간 완료','Recovery rate':'회복률','Progress':'진행 상황','Best performing':'최고 성과','Needs improvement':'개선 필요','New goal…':'새 목표…','Add goal':'목표 추가','Deadline:':'마감일:','Daily reflection':'일일 회고','Achievements':'성과','Things to improve':'개선할 점','Save entry':'항목 저장','Past entries':'지난 기록','Profile & Account':'프로필 및 계정','Display name':'표시 이름','Appearance & Themes':'모양 및 테마','Notifications':'알림','Habit management':'습관 관리','Data':'데이터','Account':'계정','Export JSON':'JSON 내보내기','Reset to demo data':'데모 데이터로 초기화','Log Out':'로그아웃','Erase all my data':'모든 데이터 삭제'},
+  ar: {'Current Streak':'السلسلة الحالية','Best Streak':'أفضل سلسلة','All habits done':'اكتملت كل العادات','Last 2 years':'آخر عامين','Today':'اليوم','Consistency':'الانتظام','Last 30 days':'آخر 30 يومًا','Today’s habits':'عادات اليوم','Add habit':'إضافة عادة','Edit':'تعديل','Delete':'حذف','Target':'الهدف','Full year':'السنة كاملة','Month':'الشهر','Completed':'مكتمل','Missed':'فائت','Excluded':'مستبعد','Future':'المستقبل','Year totals':'إجمالي السنة','Goal performance (30d)':'أداء الأهداف (30 يومًا)','Weekly completions':'الإنجازات الأسبوعية','Recovery rate':'معدل العودة','Progress':'التقدم','Best performing':'الأفضل أداءً','Needs improvement':'يحتاج إلى تحسين','New goal…':'هدف جديد…','Add goal':'إضافة هدف','Deadline:':'الموعد النهائي:','Daily reflection':'تأمل يومي','Achievements':'الإنجازات','Things to improve':'أمور للتحسين','Save entry':'حفظ الإدخال','Past entries':'الإدخالات السابقة','Profile & Account':'الملف الشخصي والحساب','Display name':'اسم العرض','Appearance & Themes':'المظهر والسمات','Notifications':'الإشعارات','Habit management':'إدارة العادات','Data':'البيانات','Account':'الحساب','Export JSON':'تصدير JSON','Reset to demo data':'إعادة تعيين البيانات التجريبية','Log Out':'تسجيل الخروج','Erase all my data':'محو جميع بياناتي'},
+  hi: {'Current Streak':'वर्तमान सिलसिला','Best Streak':'सर्वश्रेष्ठ सिलसिला','All habits done':'सभी आदतें पूरी','Last 2 years':'पिछले 2 वर्ष','Today':'आज','Consistency':'निरंतरता','Last 30 days':'पिछले 30 दिन','Today’s habits':'आज की आदतें','Add habit':'आदत जोड़ें','Edit':'बदलें','Delete':'हटाएँ','Target':'लक्ष्य','Full year':'पूरा वर्ष','Month':'महीना','Completed':'पूरा','Missed':'छूटा','Excluded':'बाहर रखा','Future':'भविष्य','Year totals':'वार्षिक कुल','Goal performance (30d)':'लक्ष्य प्रदर्शन (30 दिन)','Weekly completions':'साप्ताहिक पूर्णता','Recovery rate':'वापसी दर','Progress':'प्रगति','Best performing':'सर्वश्रेष्ठ प्रदर्शन','Needs improvement':'सुधार आवश्यक','New goal…':'नया लक्ष्य…','Add goal':'लक्ष्य जोड़ें','Deadline:':'अंतिम तिथि:','Daily reflection':'दैनिक चिंतन','Achievements':'उपलब्धियाँ','Things to improve':'सुधारने योग्य बातें','Save entry':'प्रविष्टि सहेजें','Past entries':'पिछली प्रविष्टियाँ','Profile & Account':'प्रोफ़ाइल और खाता','Display name':'प्रदर्शित नाम','Appearance & Themes':'रूप और थीम','Notifications':'सूचनाएँ','Habit management':'आदत प्रबंधन','Data':'डेटा','Account':'खाता','Export JSON':'JSON निर्यात करें','Reset to demo data':'डेमो डेटा रीसेट करें','Log Out':'लॉग आउट','Erase all my data':'मेरा सारा डेटा मिटाएँ'},
+  my: {'Current Streak':'လက်ရှိဆက်တိုက်ရက်','Best Streak':'အကောင်းဆုံးဆက်တိုက်ရက်','Today':'ယနေ့','Consistency':'ပုံမှန်လုပ်ဆောင်မှု','Today’s habits':'ယနေ့အလေ့အကျင့်များ','Add habit':'အလေ့အကျင့်ထည့်ရန်','Edit':'ပြင်ဆင်ရန်','Delete':'ဖျက်ရန်','Target':'ပန်းတိုင်','Full year':'တစ်နှစ်လုံး','Month':'လ','Completed':'ပြီးဆုံး','Missed':'လွတ်သွားသည်','Excluded':'မပါဝင်','Future':'အနာဂတ်','Progress':'တိုးတက်မှု','New goal…':'ပန်းတိုင်အသစ်…','Add goal':'ပန်းတိုင်ထည့်ရန်','Deadline:':'နောက်ဆုံးရက်:','Achievements':'အောင်မြင်မှုများ','Save entry':'မှတ်တမ်းသိမ်းရန်','Past entries':'ယခင်မှတ်တမ်းများ','Profile & Account':'ပရိုဖိုင်နှင့် အကောင့်','Display name':'ပြသမည့်အမည်','Appearance & Themes':'အသွင်အပြင်နှင့် အပြင်အဆင်','Notifications':'အသိပေးချက်များ','Habit management':'အလေ့အကျင့်စီမံရန်','Data':'ဒေတာ','Account':'အကောင့်','Export JSON':'JSON ထုတ်ယူရန်','Log Out':'ထွက်ရန်','Erase all my data':'ဒေတာအားလုံးဖျက်ရန်'},
+  th: {'Current Streak':'สถิติต่อเนื่องปัจจุบัน','Best Streak':'สถิติต่อเนื่องสูงสุด','All habits done':'ทำครบทุกนิสัยแล้ว','Last 2 years':'2 ปีที่ผ่านมา','Today':'วันนี้','Consistency':'ความสม่ำเสมอ','Last 30 days':'30 วันที่ผ่านมา','Today’s habits':'นิสัยวันนี้','Add habit':'เพิ่มนิสัย','Edit':'แก้ไข','Delete':'ลบ','Target':'เป้าหมาย','Full year':'ทั้งปี','Month':'เดือน','Completed':'เสร็จแล้ว','Missed':'พลาด','Excluded':'ยกเว้น','Future':'อนาคต','Year totals':'รวมทั้งปี','Goal performance (30d)':'ผลลัพธ์เป้าหมาย (30 วัน)','Weekly completions':'ทำสำเร็จรายสัปดาห์','Recovery rate':'อัตราการกลับมาทำ','Progress':'ความคืบหน้า','Best performing':'ทำได้ดีที่สุด','Needs improvement':'ควรปรับปรุง','New goal…':'เป้าหมายใหม่…','Add goal':'เพิ่มเป้าหมาย','Deadline:':'กำหนดส่ง:','Daily reflection':'ทบทวนประจำวัน','Achievements':'ความสำเร็จ','Things to improve':'สิ่งที่ควรปรับปรุง','Save entry':'บันทึก','Past entries':'บันทึกก่อนหน้า','Profile & Account':'โปรไฟล์และบัญชี','Display name':'ชื่อที่แสดง','Appearance & Themes':'รูปลักษณ์และธีม','Notifications':'การแจ้งเตือน','Habit management':'จัดการนิสัย','Data':'ข้อมูล','Account':'บัญชี','Export JSON':'ส่งออก JSON','Reset to demo data':'รีเซ็ตข้อมูลตัวอย่าง','Log Out':'ออกจากระบบ','Erase all my data':'ลบข้อมูลทั้งหมดของฉัน'}
+};
+const extraLex = {
+  es: {'Profile & Account':'Perfil y cuenta','Choose Your Background':'Elige tu fondo','Make LifeTrack beautiful with your favorite pictures.':'Personaliza LifeTrack con tus imágenes favoritas.','Background image':'Imagen de fondo','Default background':'Fondo predeterminado','Reset Background':'Restablecer fondo','Reminders':'Recordatorios','Browser notifications':'Notificaciones del navegador','Send test reminder':'Enviar recordatorio de prueba','System Default':'Predeterminado del sistema','Classic Light':'Claro clásico','Classic Dark':'Oscuro clásico','Add':'Añadir','No reminders yet':'Aún no hay recordatorios','Nothing scheduled today.':'No hay nada programado para hoy.','No habits yet.':'Aún no hay hábitos.','Please give your habit a name, then press Save.':'Escribe un nombre para el hábito y pulsa Guardar.'},
+  fr: {'Profile & Account':'Profil et compte','Choose Your Background':'Choisissez votre arrière-plan','Make LifeTrack beautiful with your favorite pictures.':'Personnalisez LifeTrack avec vos images préférées.','Background image':'Image d’arrière-plan','Default background':'Arrière-plan par défaut','Reset Background':'Réinitialiser l’arrière-plan','Reminders':'Rappels','Browser notifications':'Notifications du navigateur','Send test reminder':'Envoyer un rappel test','System Default':'Paramètres système','Classic Light':'Clair classique','Classic Dark':'Sombre classique','Add':'Ajouter','No reminders yet':'Aucun rappel pour le moment','Nothing scheduled today.':'Rien de prévu aujourd’hui.','No habits yet.':'Aucune habitude pour le moment.','Please give your habit a name, then press Save.':'Donnez un nom à votre habitude, puis appuyez sur Enregistrer.'},
+  de: {'Profile & Account':'Profil und Konto','Choose Your Background':'Hintergrund auswählen','Make LifeTrack beautiful with your favorite pictures.':'Gestalte LifeTrack mit deinen Lieblingsbildern.','Background image':'Hintergrundbild','Default background':'Standardhintergrund','Reset Background':'Hintergrund zurücksetzen','Reminders':'Erinnerungen','Browser notifications':'Browser-Benachrichtigungen','Send test reminder':'Test-Erinnerung senden','System Default':'Systemstandard','Classic Light':'Klassisch hell','Classic Dark':'Klassisch dunkel','Add':'Hinzufügen','No reminders yet':'Noch keine Erinnerungen','Nothing scheduled today.':'Für heute ist nichts geplant.','No habits yet.':'Noch keine Gewohnheiten.','Please give your habit a name, then press Save.':'Gib deiner Gewohnheit einen Namen und klicke auf Speichern.'},
+  pt: {'Profile & Account':'Perfil e conta','Choose Your Background':'Escolha seu plano de fundo','Make LifeTrack beautiful with your favorite pictures.':'Personalize o LifeTrack com suas imagens favoritas.','Background image':'Imagem de fundo','Default background':'Plano de fundo padrão','Reset Background':'Redefinir plano de fundo','Reminders':'Lembretes','Browser notifications':'Notificações do navegador','Send test reminder':'Enviar lembrete de teste','System Default':'Padrão do sistema','Classic Light':'Claro clássico','Classic Dark':'Escuro clássico','Add':'Adicionar','No reminders yet':'Ainda não há lembretes','Nothing scheduled today.':'Nada programado para hoje.','No habits yet.':'Ainda não há hábitos.','Please give your habit a name, then press Save.':'Dê um nome ao hábito e pressione Salvar.'},
+  id: {'Profile & Account':'Profil & Akun','Choose Your Background':'Pilih Latar Belakang','Make LifeTrack beautiful with your favorite pictures.':'Percantik LifeTrack dengan gambar favorit Anda.','Background image':'Gambar latar belakang','Default background':'Latar belakang default','Reset Background':'Atur Ulang Latar Belakang','Reminders':'Pengingat','Browser notifications':'Notifikasi browser','Send test reminder':'Kirim pengingat uji','System Default':'Default sistem','Classic Light':'Terang klasik','Classic Dark':'Gelap klasik','Add':'Tambah','No reminders yet':'Belum ada pengingat','Nothing scheduled today.':'Tidak ada jadwal hari ini.','No habits yet.':'Belum ada kebiasaan.','Please give your habit a name, then press Save.':'Beri nama kebiasaan Anda, lalu tekan Simpan.'},
+  vi: {'Profile & Account':'Hồ sơ & Tài khoản','Choose Your Background':'Chọn hình nền','Make LifeTrack beautiful with your favorite pictures.':'Làm đẹp LifeTrack bằng những hình ảnh yêu thích của bạn.','Background image':'Hình nền','Default background':'Hình nền mặc định','Reset Background':'Đặt lại hình nền','Reminders':'Lời nhắc','Browser notifications':'Thông báo trình duyệt','Send test reminder':'Gửi lời nhắc thử','System Default':'Mặc định hệ thống','Classic Light':'Sáng cổ điển','Classic Dark':'Tối cổ điển','Add':'Thêm','No reminders yet':'Chưa có lời nhắc','Nothing scheduled today.':'Hôm nay không có lịch trình.','No habits yet.':'Chưa có thói quen nào.','Please give your habit a name, then press Save.':'Hãy đặt tên cho thói quen rồi nhấn Lưu.'},
+  zh: {'Profile & Account':'个人资料与账户','Choose Your Background':'选择背景','Make LifeTrack beautiful with your favorite pictures.':'用你喜欢的图片装饰 LifeTrack。','Background image':'背景图片','Default background':'默认背景','Reset Background':'重置背景','Reminders':'提醒','Browser notifications':'浏览器通知','Send test reminder':'发送测试提醒','System Default':'系统默认','Classic Light':'经典浅色','Classic Dark':'经典深色','Add':'添加','No reminders yet':'暂无提醒','Nothing scheduled today.':'今天没有安排。','No habits yet.':'暂无习惯。','Please give your habit a name, then press Save.':'请为习惯命名，然后点击保存。'},
+  ja: {'Profile & Account':'プロフィールとアカウント','Choose Your Background':'背景を選択','Make LifeTrack beautiful with your favorite pictures.':'お気に入りの画像でLifeTrackを彩りましょう。','Background image':'背景画像','Default background':'デフォルトの背景','Reset Background':'背景をリセット','Reminders':'リマインダー','Browser notifications':'ブラウザー通知','Send test reminder':'テスト通知を送信','System Default':'システム設定','Classic Light':'クラシックライト','Classic Dark':'クラシックダーク','Add':'追加','No reminders yet':'リマインダーはありません','Nothing scheduled today.':'今日は予定がありません。','No habits yet.':'習慣はまだありません。','Please give your habit a name, then press Save.':'習慣の名前を入力して「保存」を押してください。'},
+  ko: {'Profile & Account':'프로필 및 계정','Choose Your Background':'배경 선택','Make LifeTrack beautiful with your favorite pictures.':'좋아하는 사진으로 LifeTrack을 꾸며 보세요.','Background image':'배경 이미지','Default background':'기본 배경','Reset Background':'배경 초기화','Reminders':'알림','Browser notifications':'브라우저 알림','Send test reminder':'테스트 알림 보내기','System Default':'시스템 기본값','Classic Light':'클래식 라이트','Classic Dark':'클래식 다크','Add':'추가','No reminders yet':'알림이 없습니다','Nothing scheduled today.':'오늘 예정된 일정이 없습니다.','No habits yet.':'아직 습관이 없습니다.','Please give your habit a name, then press Save.':'습관 이름을 입력한 후 저장을 누르세요.'},
+  ar: {'Profile & Account':'الملف الشخصي والحساب','Choose Your Background':'اختر خلفيتك','Make LifeTrack beautiful with your favorite pictures.':'زيّن LifeTrack بصورك المفضلة.','Background image':'صورة الخلفية','Default background':'الخلفية الافتراضية','Reset Background':'إعادة ضبط الخلفية','Reminders':'التذكيرات','Browser notifications':'إشعارات المتصفح','Send test reminder':'إرسال تذكير تجريبي','System Default':'إعداد النظام','Classic Light':'فاتح كلاسيكي','Classic Dark':'داكن كلاسيكي','Add':'إضافة','No reminders yet':'لا توجد تذكيرات بعد','Nothing scheduled today.':'لا يوجد شيء مجدول اليوم.','No habits yet.':'لا توجد عادات بعد.','Please give your habit a name, then press Save.':'أدخل اسمًا للعادة ثم اضغط حفظ.'},
+  hi: {'Profile & Account':'प्रोफ़ाइल और खाता','Choose Your Background':'अपनी पृष्ठभूमि चुनें','Make LifeTrack beautiful with your favorite pictures.':'अपनी पसंदीदा तस्वीरों से LifeTrack को सुंदर बनाएँ।','Background image':'पृष्ठभूमि छवि','Default background':'डिफ़ॉल्ट पृष्ठभूमि','Reset Background':'पृष्ठभूमि रीसेट करें','Reminders':'रिमाइंडर','Browser notifications':'ब्राउज़र सूचनाएँ','Send test reminder':'परीक्षण रिमाइंडर भेजें','System Default':'सिस्टम डिफ़ॉल्ट','Classic Light':'क्लासिक लाइट','Classic Dark':'क्लासिक डार्क','Add':'जोड़ें','No reminders yet':'अभी कोई रिमाइंडर नहीं','Nothing scheduled today.':'आज के लिए कुछ निर्धारित नहीं है।','No habits yet.':'अभी कोई आदत नहीं है।','Please give your habit a name, then press Save.':'आदत का नाम दें और फिर सहेजें दबाएँ।'},
+  my: {'Profile & Account':'ပရိုဖိုင်နှင့် အကောင့်','Choose Your Background':'နောက်ခံကို ရွေးချယ်ပါ','Background image':'နောက်ခံပုံ','Default background':'မူလနောက်ခံ','Reset Background':'နောက်ခံပြန်သတ်မှတ်ရန်','Reminders':'သတိပေးချက်များ','Browser notifications':'ဘရောက်ဇာ အသိပေးချက်များ','Send test reminder':'စမ်းသပ်သတိပေးချက် ပို့ရန်','Add':'ထည့်ရန်','No reminders yet':'သတိပေးချက် မရှိသေးပါ','Nothing scheduled today.':'ယနေ့အတွက် အစီအစဉ်မရှိပါ။','No habits yet.':'အလေ့အကျင့် မရှိသေးပါ။'},
+  th: {'Profile & Account':'โปรไฟล์และบัญชี','Choose Your Background':'เลือกพื้นหลัง','Make LifeTrack beautiful with your favorite pictures.':'ตกแต่ง LifeTrack ด้วยภาพที่คุณชื่นชอบ','Background image':'ภาพพื้นหลัง','Default background':'พื้นหลังเริ่มต้น','Reset Background':'รีเซ็ตพื้นหลัง','Reminders':'การแจ้งเตือน','Browser notifications':'การแจ้งเตือนจากเบราว์เซอร์','Send test reminder':'ส่งการแจ้งเตือนทดสอบ','System Default':'ค่าเริ่มต้นของระบบ','Classic Light':'สว่างคลาสสิก','Classic Dark':'มืดคลาสสิก','Add':'เพิ่ม','No reminders yet':'ยังไม่มีการแจ้งเตือน','Nothing scheduled today.':'วันนี้ไม่มีรายการที่กำหนดไว้','No habits yet.':'ยังไม่มีนิสัย','Please give your habit a name, then press Save.':'ตั้งชื่อนิสัยแล้วกดบันทึก'}
+};
+const translateUI = root => {
+  document.documentElement.lang = LANG;
+  document.documentElement.dir = LANG === 'ar' ? 'rtl' : 'ltr';
+  const words = uiLex[LANG] ? {...uiLex[LANG], ...(extraLex[LANG] || {})} : extraLex[LANG];
+  if (!words || !root) return;
+  const keys = Object.keys(words).sort((a,b)=>b.length-a.length);
+  const convert = value => keys.reduce((text,key)=>text.split(key).join(words[key]),value);
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+  while(walker.nextNode()) walker.currentNode.nodeValue=convert(walker.currentNode.nodeValue);
+  root.querySelectorAll('input[placeholder],textarea[placeholder],[aria-label],[title]').forEach(el=>['placeholder','aria-label','title'].forEach(attr=>{if(el.hasAttribute(attr))el.setAttribute(attr,convert(el.getAttribute(attr)))}));
+};
+const tr = (k, idx = -1) => { const d = dict[LANG] || dict['en']; return idx >= 0 ? (d[k][idx] || dict['en'][k][idx]) : (d[k] || dict['en'][k]); };
+
+const NAV_IDS = ['overview','daily','annual','analytics','goals','journal','premium'];
+const COL=['#4f46e5','#7c3aed','#0ea5e9','#22c55e','#f59e0b','#ec4899','#ef4444','#14b8a6'];
+const ICO=['📖','🙏','🗣️','🏃','📚','🎓','💧','💡','🧘','🍎','😴','✍️'];
+const QUO=['Small steps every day lead to big change.','We are what we repeatedly do.','Discipline is choosing what you want most over what you want now.','Don’t break the chain.'];
+const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const ALL=[0,1,2,3,4,5,6];
+let S,view='overview',sbc=false,Y=T.getFullYear(),M=T.getMonth(),AV=innerWidth>860?'year':'month';
+
+function seed(){const H=[['Bible Reading','📖','20 minutes'],['Prayer','🙏','10 minutes'],['English Learning','🗣️','30 minutes'],['Exercise','🏃','30 minutes'],['Reading Books','📚','15 minutes'],['Studying','🎓','60 minutes'],['Drinking Water','💧','2 liters'],['Learning New Skills','💡','30 minutes']];
+const habits=H.map((h,i)=>({id:'h'+i,name:h[0],icon:h[1],color:COL[i%8],desc:'Daily practice: '+h[0].toLowerCase(),target:h[2],days:ALL,remind:''}));
+const logs={};let r=7;habits.forEach((h,i)=>{logs[h.id]={};for(let k=1;k<=75;k++){r=(r*9301+49297)%233280;if(r/233280<.55+.05*(i%4))logs[h.id][ymd(addD(T,-k))]=1}});
+return{habits,logs,goals:[{id:'g1',title:'Read 12 books this year',due:ymd(addD(T,120)),pr:40,done:false}],journal:{},set:{name:'You',theme:'auto',notif:false,avatar:''}}}
+try{S=JSON.parse(localStorage.getItem('lifetrack'))}catch(e){}
+if(!S)S=seed();
+S.habits.forEach(h=>h.remind=(h.remind||'').split(',').filter(Boolean).map(t=>t.slice(0,5)).join(','));
+const save=()=>{try{localStorage.setItem('lifetrack',JSON.stringify(S))}catch(e){}};
+const uid=()=>'i'+Math.random().toString(36).slice(2,9);
+const sch=(h,d)=>h.days.includes(d.getDay())&&!(S.logs[h.id]&&S.logs[h.id][ymd(d)]===2);
+const done=(h,ds)=>!!(S.logs[h.id]&&S.logs[h.id][ds]===1);
+const getAv=()=>S.set.avatar?`<img src="${S.set.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`:esc(S.set.name[0]||'U').toUpperCase();
+function st(h,d){const ds=ymd(d),v=S.logs[h.id]&&S.logs[h.id][ds];if(v===1)return'd';if(v===3)return'm';if(v===2||!h.days.includes(d.getDay()))return'x';return ds>=TD?'f':'m'}
+function streak(h){let c=0;for(let i=0;i<730;i++){const d=addD(T,-i),s=st(h,d);if(s==='x')continue;if(s==='d')c++;else if(i>0)break}return c}
+function dayRate(d){const hs=S.habits.filter(h=>sch(h,d));return[hs.filter(h=>done(h,ymd(d))).length,hs.length]}
+function streaks(){let cur=0,best=0,run=0,counting=true;for(let i=0;i<730;i++){const d=addD(T,-i),[a,b]=dayRate(d);if(!b)continue;const full=a===b;if(full)run++;else{if(i>0||a<b&&i>0){}best=Math.max(best,run);if(counting&&i>0)cur=run,counting=false;else if(counting&&i===0){}run=0;if(i===0)counting=true}}
+best=Math.max(best,run);if(counting)cur=run;return[cur,best]}
+function consistency(days){let a=0,b=0;for(let i=0;i<days;i++){const d=addD(T,-i);if(i===0)continue;const r=dayRate(d);a+=r[0];b+=r[1]}return b?Math.round(100*a/b):0}
+function hRate(h,days){let a=0,b=0;for(let i=1;i<=days;i++){const d=addD(T,-i);if(sch(h,d)){b++;if(done(h,ymd(d)))a++}}return b?Math.round(100*a/b):0}
+function recovery(){let miss=0,rec=0;S.habits.forEach(h=>{for(let i=1;i<200;i++){const d=addD(T,-i);if(st(h,d)!=='m')continue;miss++;for(let j=1;j<=7;j++){const n=addD(d,j);if(n>T)break;if(sch(h,n)){if(done(h,ymd(n)))rec++;break}}}});return miss?Math.round(100*rec/miss):0}
+function weekRate(w){let a=0,b=0;for(let i=0;i<7;i++){const d=addD(T,-(w*7+i));if(d>T)continue;const r=dayRate(d);a+=r[0];b+=r[1]}return b?Math.round(100*a/b):0}
+function toggle(id,ds){S.logs[id]=S.logs[id]||{};if(S.logs[id][ds]===1)delete S.logs[id][ds];else S.logs[id][ds]=1;save();render()}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function stat(l,v,s){return`<div class="card"><div class="mu">${l}</div><div class="big">${v}</div><div class="mu">${s}</div></div>`}
+function habitCard(h){const ok=done(h,TD),sk=streak(h);return`<div class="card"><div class="hc"><div class="ic" style="background:${h.color}22">${h.icon}</div><div style="flex:1;min-width:0"><b>${esc(h.name)}</b><div class="mu">${esc(h.desc)} · Target: ${esc(h.target)}</div></div><input type="checkbox" aria-label="Complete ${esc(h.name)}" data-a="tg" data-id="${h.id}" ${ok?'checked':''}></div>
+<div class="bar"><i style="width:${ok?100:hRate(h,7)}%;background:${ok?'var(--ok)':h.color}"></i></div><div class="row sb mu" style="margin-top:6px"><span>🔥 ${sk}-day streak · ${hRate(h,7)}% this week</span><span>${h.remind?'⏰ '+h.remind.split(',').join(' · '):''}</span></div>
+<div class="row" style="margin-top:8px"><button class="b" data-a="edit" data-id="${h.id}">Edit</button><button class="b d" data-a="del" data-id="${h.id}">Delete</button></div></div>`}
+const premiumCopy={
+  en:['LifeTrack Premium','A simple plan to support LifeTrack’s future development.','PREMIUM MEMBERSHIP','/ month','Planned subscription price','What Premium will include','Advanced habit analytics','More detailed progress history','Cloud sync across devices','More goals and personalization','Payment availability','Not available yet','LifeTrack is free while we arrange a legitimate payment provider and secure payment verification.','No payment is being collected. Never send money to a personal wallet or anyone claiming to represent LifeTrack.','Subscriptions opening later','Why checkout is not enabled','Recurring payments require an approved merchant account, a secure server, and verified payment notifications. Premium access will activate only after the provider confirms payment. Card details are never stored in this browser app.'],
+  es:['LifeTrack Premium','Un plan sencillo para apoyar el desarrollo futuro de LifeTrack.','MEMBRESÍA PREMIUM','/ mes','Precio de suscripción previsto','Qué incluirá Premium','Análisis avanzados de hábitos','Historial de progreso más detallado','Sincronización en la nube entre dispositivos','Más objetivos y personalización','Disponibilidad de pago','Aún no disponible','LifeTrack es gratis mientras configuramos un proveedor de pagos legítimo y verificaciones seguras.','No se está cobrando ningún pago. Nunca envíes dinero a una billetera personal ni a alguien que diga representar a LifeTrack.','Suscripciones próximamente','Por qué no está habilitado el pago','Los pagos periódicos requieren una cuenta de comerciante aprobada, un servidor seguro y notificaciones de pago verificadas. Premium se activará solo cuando el proveedor confirme el pago. Esta aplicación no guarda datos de tarjetas.'],
+  fr:['LifeTrack Premium','Un forfait simple pour soutenir le développement futur de LifeTrack.','ABONNEMENT PREMIUM','/ mois','Prix d’abonnement prévu','Ce que Premium comprendra','Analyses avancées des habitudes','Historique de progression plus détaillé','Synchronisation cloud entre appareils','Plus d’objectifs et de personnalisation','Disponibilité du paiement','Pas encore disponible','LifeTrack est gratuit pendant la mise en place d’un prestataire de paiement fiable et d’une vérification sécurisée.','Aucun paiement n’est collecté. N’envoyez jamais d’argent à un portefeuille personnel ni à une personne prétendant représenter LifeTrack.','Abonnements bientôt disponibles','Pourquoi le paiement n’est pas activé','Les paiements récurrents exigent un compte marchand approuvé, un serveur sécurisé et des notifications de paiement vérifiées. Premium sera activé uniquement après confirmation du paiement par le prestataire. Cette application ne stocke aucune carte.'],
+  de:['LifeTrack Premium','Ein einfacher Plan zur Unterstützung der zukünftigen Entwicklung von LifeTrack.','PREMIUM-MITGLIEDSCHAFT','/ Monat','Geplanter Abonnementpreis','Das ist in Premium enthalten','Erweiterte Gewohnheitsanalysen','Detaillierterer Fortschrittsverlauf','Cloud-Synchronisierung zwischen Geräten','Mehr Ziele und Personalisierung','Zahlungsmöglichkeit','Noch nicht verfügbar','LifeTrack ist kostenlos, während wir einen seriösen Zahlungsanbieter und eine sichere Zahlungsprüfung einrichten.','Es werden keine Zahlungen angenommen. Sende niemals Geld an ein privates Wallet oder an Personen, die behaupten, LifeTrack zu vertreten.','Abonnements folgen später','Warum die Zahlung noch nicht aktiviert ist','Wiederkehrende Zahlungen benötigen ein genehmigtes Händlerkonto, einen sicheren Server und verifizierte Zahlungsmitteilungen. Premium wird erst nach Zahlungsbestätigung durch den Anbieter aktiviert. Diese App speichert keine Kartendaten.'],
+  pt:['LifeTrack Premium','Um plano simples para apoiar o desenvolvimento futuro do LifeTrack.','ASSINATURA PREMIUM','/ mês','Preço previsto da assinatura','O que o Premium incluirá','Análises avançadas de hábitos','Histórico de progresso mais detalhado','Sincronização na nuvem entre dispositivos','Mais metas e personalização','Disponibilidade de pagamento','Ainda não disponível','O LifeTrack é gratuito enquanto configuramos um provedor de pagamento confiável e uma verificação segura.','Nenhum pagamento está sendo cobrado. Nunca envie dinheiro para uma carteira pessoal ou para alguém que diga representar o LifeTrack.','Assinaturas disponíveis futuramente','Por que o pagamento não está habilitado','Pagamentos recorrentes exigem uma conta de comerciante aprovada, um servidor seguro e notificações de pagamento verificadas. O Premium será ativado somente após a confirmação do pagamento pelo provedor. Este app não armazena dados de cartão.'],
+  id:['LifeTrack Premium','Paket sederhana untuk mendukung pengembangan LifeTrack di masa depan.','KEANGGOTAAN PREMIUM','/ bulan','Harga langganan yang direncanakan','Yang akan tersedia di Premium','Analitik kebiasaan lanjutan','Riwayat kemajuan lebih terperinci','Sinkronisasi cloud antarperangkat','Lebih banyak sasaran dan personalisasi','Ketersediaan pembayaran','Belum tersedia','LifeTrack gratis selama kami menyiapkan penyedia pembayaran tepercaya dan verifikasi pembayaran yang aman.','Tidak ada pembayaran yang sedang ditagihkan. Jangan pernah mengirim uang ke dompet pribadi atau orang yang mengaku mewakili LifeTrack.','Langganan segera hadir','Mengapa pembayaran belum tersedia','Pembayaran berulang memerlukan akun merchant yang disetujui, server aman, dan notifikasi pembayaran terverifikasi. Premium hanya aktif setelah penyedia mengonfirmasi pembayaran. Aplikasi ini tidak menyimpan data kartu.'],
+  vi:['LifeTrack Premium','Gói đơn giản hỗ trợ LifeTrack phát triển trong tương lai.','HỘI VIÊN PREMIUM','/ tháng','Giá đăng ký dự kiến','Premium sẽ bao gồm','Phân tích thói quen nâng cao','Lịch sử tiến độ chi tiết hơn','Đồng bộ đám mây giữa các thiết bị','Thêm mục tiêu và tùy chỉnh','Tình trạng thanh toán','Chưa khả dụng','LifeTrack miễn phí trong khi chúng tôi thiết lập nhà cung cấp thanh toán uy tín và xác minh an toàn.','Hiện không thu bất kỳ khoản thanh toán nào. Không gửi tiền cho ví cá nhân hoặc người tự nhận đại diện LifeTrack.','Gói đăng ký sẽ mở sau','Vì sao chưa thể thanh toán','Thanh toán định kỳ cần tài khoản người bán được duyệt, máy chủ bảo mật và thông báo thanh toán đã xác minh. Premium chỉ được kích hoạt sau khi nhà cung cấp xác nhận thanh toán. Ứng dụng không lưu thông tin thẻ.'],
+  zh:['LifeTrack 高级版','简单支持 LifeTrack 未来发展的订阅方案。','高级会员','/ 月','计划订阅价格','高级版将包含','高级习惯分析','更详细的进度记录','设备间云同步','更多目标与个性化设置','付款状态','暂不可用','我们正在配置可靠的支付服务商和安全验证，目前 LifeTrack 免费使用。','目前不会收取任何费用。请勿向个人钱包或任何自称代表 LifeTrack 的人转账。','订阅功能稍后开放','为何尚未开放付款','定期付款需要经过批准的商户账户、安全服务器和已验证的付款通知。服务商确认付款后才会启用高级版。本应用不会存储银行卡信息。'],
+  ja:['LifeTrack プレミアム','LifeTrackの今後の開発を支援するシンプルなプランです。','プレミアム会員','/ 月','予定価格','プレミアムに含まれる機能','高度な習慣分析','より詳細な進捗履歴','デバイス間のクラウド同期','目標とカスタマイズの追加','お支払い状況','まだ利用できません','信頼できる決済サービスと安全な決済確認を準備している間、LifeTrackは無料です。','現在、料金は請求していません。個人のウォレットやLifeTrackを名乗る人に送金しないでください。','サブスクリプションは後日開始予定','決済を利用できない理由','継続課金には、承認済みの加盟店アカウント、安全なサーバー、検証済みの決済通知が必要です。決済サービスによる確認後にのみPremiumが有効になります。このアプリはカード情報を保存しません。'],
+  ko:['LifeTrack 프리미엄','LifeTrack의 향후 개발을 지원하는 간단한 요금제입니다.','프리미엄 멤버십','/ 월','예정 구독 가격','프리미엄에 포함될 기능','고급 습관 분석','더 자세한 진행 기록','기기 간 클라우드 동기화','더 많은 목표와 개인 설정','결제 가능 여부','아직 이용할 수 없음','신뢰할 수 있는 결제 제공업체와 안전한 결제 확인 절차를 준비하는 동안 LifeTrack은 무료입니다.','현재 결제는 진행되지 않습니다. 개인 지갑이나 LifeTrack을 대표한다고 주장하는 사람에게 송금하지 마세요.','구독은 추후 제공 예정','결제가 아직 지원되지 않는 이유','정기 결제에는 승인된 판매자 계정, 보안 서버, 검증된 결제 알림이 필요합니다. 제공업체가 결제를 확인한 뒤에만 프리미엄이 활성화됩니다. 이 앱은 카드 정보를 저장하지 않습니다.'],
+  ar:['LifeTrack المميز','خطة بسيطة لدعم تطوير LifeTrack مستقبلًا.','العضوية المميزة','/ شهريًا','السعر المخطط للاشتراك','مزايا العضوية المميزة','تحليلات متقدمة للعادات','سجل تقدم أكثر تفصيلًا','مزامنة سحابية بين الأجهزة','أهداف وخيارات تخصيص إضافية','توفر الدفع','غير متاح بعد','LifeTrack مجاني حاليًا إلى أن نجهز مزود دفع موثوقًا وآلية تحقق آمنة.','لا يتم تحصيل أي مدفوعات. لا ترسل أموالًا إلى محفظة شخصية أو إلى أي شخص يدعي تمثيل LifeTrack.','ستتوفر الاشتراكات لاحقًا','لماذا لم يتم تفعيل الدفع','تتطلب المدفوعات المتكررة حساب تاجر معتمدًا وخادمًا آمنًا وإشعارات دفع موثقة. لن تُفعّل العضوية المميزة إلا بعد تأكيد مزود الخدمة للدفع. لا يخزن هذا التطبيق بيانات البطاقات.'],
+  hi:['LifeTrack प्रीमियम','LifeTrack के भविष्य के विकास में सहयोग देने की सरल योजना।','प्रीमियम सदस्यता','/ माह','नियोजित सदस्यता मूल्य','प्रीमियम में क्या शामिल होगा','उन्नत आदत विश्लेषण','अधिक विस्तृत प्रगति इतिहास','डिवाइसों के बीच क्लाउड सिंक','अधिक लक्ष्य और वैयक्तिकरण','भुगतान उपलब्धता','अभी उपलब्ध नहीं','विश्वसनीय भुगतान प्रदाता और सुरक्षित भुगतान सत्यापन की व्यवस्था होने तक LifeTrack मुफ़्त है।','अभी कोई भुगतान नहीं लिया जा रहा है। किसी निजी वॉलेट या LifeTrack का प्रतिनिधि होने का दावा करने वाले व्यक्ति को पैसे न भेजें।','सदस्यता बाद में उपलब्ध होगी','भुगतान अभी क्यों चालू नहीं है','आवर्ती भुगतान के लिए स्वीकृत व्यापारी खाता, सुरक्षित सर्वर और सत्यापित भुगतान सूचनाएँ आवश्यक हैं। प्रदाता द्वारा भुगतान की पुष्टि के बाद ही प्रीमियम सक्रिय होगा। यह ऐप कार्ड विवरण संग्रहीत नहीं करता।'],
+  th:['LifeTrack Premium','แพ็กเกจง่าย ๆ เพื่อสนับสนุนการพัฒนา LifeTrack ในอนาคต','สมาชิกพรีเมียม','/ เดือน','ราคาสมัครสมาชิกที่วางแผนไว้','สิ่งที่จะรวมอยู่ใน Premium','วิเคราะห์นิสัยขั้นสูง','ประวัติความคืบหน้าที่ละเอียดขึ้น','ซิงค์ข้อมูลบนคลาวด์ระหว่างอุปกรณ์','เป้าหมายและการปรับแต่งเพิ่มเติม','สถานะการชำระเงิน','ยังไม่พร้อมให้บริการ','LifeTrack ใช้ได้ฟรีระหว่างที่เราจัดเตรียมผู้ให้บริการชำระเงินที่น่าเชื่อถือและระบบตรวจสอบที่ปลอดภัย','ขณะนี้ไม่มีการเรียกเก็บเงิน อย่าส่งเงินไปยังกระเป๋าเงินส่วนตัวหรือผู้ที่อ้างว่าเป็นตัวแทนของ LifeTrack','การสมัครสมาชิกจะเปิดให้ใช้ภายหลัง','เหตุใดจึงยังชำระเงินไม่ได้','การชำระเงินต่อเนื่องต้องใช้บัญชีผู้ค้าที่ได้รับอนุมัติ เซิร์ฟเวอร์ที่ปลอดภัย และการแจ้งเตือนการชำระเงินที่ตรวจสอบแล้ว Premium จะเปิดใช้เมื่อผู้ให้บริการยืนยันการชำระเงินเท่านั้น แอปนี้ไม่จัดเก็บข้อมูลบัตร'],
+  my:['LifeTrack Premium','အစီအစဉ်ရိုးရှင်းစွာဖြင့် LifeTrack ၏ အနာဂတ်ဖွံ့ဖြိုးမှုကို ပံ့ပိုးပါ။','ပရီမီယံအသင်းဝင်မှု','/ လ','စီစဉ်ထားသော အသင်းဝင်ကြေး','ပရီမီယံတွင် ပါဝင်မည့်အရာများ','အဆင့်မြင့် အလေ့အကျင့် ခွဲခြမ်းစိတ်ဖြာမှု','ပိုမိုအသေးစိတ်သော တိုးတက်မှုမှတ်တမ်း','စက်များအကြား cloud ထပ်တူပြုခြင်း','ပန်းတိုင်နှင့် စိတ်ကြိုက်ပြင်ဆင်မှုများ ပိုမိုရရှိခြင်း','ငွေပေးချေမှု အခြေအနေ','မရရှိနိုင်သေးပါ','ယုံကြည်စိတ်ချရသော ငွေပေးချေမှုဝန်ဆောင်မှုနှင့် လုံခြုံသော အတည်ပြုစနစ်ကို ပြင်ဆင်နေစဉ် LifeTrack ကို အခမဲ့အသုံးပြုနိုင်ပါသည်။','လက်ရှိတွင် ငွေပေးချေမှု မကောက်ခံပါ။ ကိုယ်ပိုင်ပိုက်ဆံအိတ်သို့ သို့မဟုတ် LifeTrack ကိုယ်စားလှယ်ဟု ဆိုသူထံ ငွေမပို့ပါနှင့်။','အသင်းဝင်မှုကို နောက်ပိုင်းတွင် ဖွင့်ပါမည်','ငွေပေးချေမှုကို အဘယ်ကြောင့် မဖွင့်သေးသနည်း','ထပ်တလဲလဲ ငွေပေးချေရန် အတည်ပြုထားသော ကုန်သည်အကောင့်၊ လုံခြုံသော ဆာဗာနှင့် စစ်ဆေးပြီး ငွေပေးချေမှု အသိပေးချက်များ လိုအပ်ပါသည်။ ဝန်ဆောင်မှုပေးသူက အတည်ပြုပြီးမှ ပရီမီယံကို ဖွင့်ပါမည်။ ဤအက်ပ်သည် ကတ်အချက်အလက်ကို မသိမ်းဆည်းပါ။'],
+  ksw:['LifeTrack Premium','တၢ်ရဲၣ်တၢ်ကျဲၤလၢ ကဆီၣ်ထွဲ LifeTrack အနာဂတ်တၢ်မၤထီၣ်ထီအဂီၢ်။','ပရီမံယၢၣ်အကရူၢ်','/ လါ','တၢ်ရဲၣ်တၢ်ကျဲၤအပှ့ၤ','တၢ်လၢ Premium ကပၣ်ဃုာ်','တၢ်မၤလိအလုၢ်အလၢ်အတၢ်သမံသမိး','တၢ်လဲၤထီၣ်လဲၤထီအတၢ်ကွဲးနီၣ်လၢအသီ','Cloud တၢ်ဒုးသ့ၣ်ညါလိာ်သးလၢ devices အဘၢၣ်စၢၤ','တၢ်တိာ်ပာ်ဒီးတၢ်ဆီတလဲလၢအါထီၣ်','တၢ်ဟ့ၣ်အပှ့ၤအတၢ်အိၣ်သး','တၢ်သူအီၤတသ့ဒံးဘၣ်','LifeTrack ကအိၣ်ဒီးအပှ့ၤတအိၣ်ဒံးဘၣ် ဖဲပရဲၣ်ကျဲၤတၢ်ဟ့ၣ်အပှ့ၤလၢအဘံၣ်ဘၢအခါ။','ပတဟံးန့ၢ်တၢ်ဟ့ၣ်အပှ့ၤနီတမံၤဘၣ်။ တဟ့ၣ်လီၤစ့ဆူပှၤတဂၤအပိုက်ဆံအလီၢ် မ့တမ့ၢ်ပှၤလၢအတဲဝဲလၢအမ့ၢ် LifeTrack ကိုယ်စားလှယ်တဂၤဘၣ်။','တၢ်ဆဲးလီၤမံၤကအိးထီၣ်လၢခံ','ဘၣ်မနုၤအဃိ တၢ်ဟ့ၣ်အပှ့ၤတအိးထီၣ်ဒံးဘၣ်','တၢ်ဟ့ၣ်အပှ့ၤလၢတလီၢ်တလီၢ်အဂီၢ် လိၣ်ဘၣ်တၢ်ပျဲတၢ်ကဲၣ်အကီၢ်၊ server လၢအဘံၣ်ဘၢ ဒီးတၢ်ဟ့ၣ်အပှ့ၤတၢ်ပာ်ဂၢၢ်ပာ်ကျၢၤ။ Premium ကအိးထီၣ်ဖဲပှၤဟ့ၣ်တၢ်မၤစၢၤပာ်ဂၢၢ်ပာ်ကျၢၤတၢ်ဟ့ၣ်အပှ့ၤဝံၤအခါ။ App အံၤတသိမ်းဃာ် card တၢ်ဂ့ၢ်တၢ်ကျိၤဘၣ်။']
+};
+const premiumText=()=>premiumCopy[LANG]||premiumCopy.en;
+const V={
+overview(){const [c,b]=streaks(),[a,t]=dayRate(T);
+return`<div class="card hero"><h1>${tr('hello')}</h1><div>${T.toDateString()}</div><div class="q" style="margin-top:8px">“${QUO[T.getDate()%QUO.length]}”</div></div>
+<div class="g g4">${stat('Current Streak',c+' days','All habits done')}${stat('Best Streak',b+' days','Last 2 years')}${stat('Today',t?Math.round(100*a/t)+'%':'–',a+' of '+t+' done')}${stat('Consistency',consistency(30)+'%','Last 30 days')}</div>
+<h2>Today’s habits</h2><div class="g g2">${S.habits.filter(h=>sch(h,T)).map(habitCard).join('')||'<div class="card mu">Nothing scheduled today.</div>'}</div>`},
+daily(){return`<div class="row sb"><h1>${tr('nav',1)}</h1><button class="b p" data-a="add">+ Add habit</button></div><div class="g g2">${S.habits.map(habitCard).join('')||'<div class="card mu">No habits yet.</div>'}</div>`},
+annual(){const mons=AV==='year'?[...Array(12).keys()]:[M];
+const tabs=mons.map(m=>{const n=new Date(Y,m+1,0).getDate();let hd='<tr><th class="n">'+MN[m]+' '+Y+'</th>';for(let d=1;d<=n;d++){const dw=['Su','Mo','Tu','We','Th','Fr','Sa'][new Date(Y,m,d).getDay()];hd+=`<th>${d}<br><span style="font-weight:normal;font-size:9px;color:var(--mu)">${dw}</span></th>`}hd+='<th>Total</th></tr>';
+const rows=S.habits.map(h=>{let tot=0,tds='';for(let d=1;d<=n;d++){const dt=new Date(Y,m,d),s=st(h,dt);if(s==='d')tot++;const dis=false;tds+=`<td><button class="cl ${s==='f'?'f':s}" ${dis?'disabled':''} title="${ymd(dt)}" aria-label="${esc(h.name)} ${ymd(dt)}" data-a="cell" data-id="${h.id}" data-d="${ymd(dt)}"></button></td>`}
+return`<tr><td class="n">${h.icon} ${esc(h.name)}</td>${tds}<td><b>${tot}</b></td></tr>`}).join('');return`<div class="hm card"><table>${hd}${rows}</table></div>`}).join('');
+const tot=S.habits.map(h=>{let c=0;for(let m=0;m<12;m++)for(let d=1;d<=31;d++){const dt=new Date(Y,m,d);if(dt.getMonth()===m&&st(h,dt)==='d')c++}return`<span class="tag hi">${h.icon} ${c} days</span>`}).join(' ');
+return`<div class="row sb"><h1>${tr('nav',2)}</h1><div class="row"><button class="b" data-a="yr" data-v="-1">‹</button><b>${Y}</b><button class="b" data-a="yr" data-v="1">›</button>
+<select data-c="av"><option value="year" ${AV==='year'?'selected':''}>Full year</option><option value="month" ${AV==='month'?'selected':''}>Month</option></select>
+${AV==='month'?`<select data-c="mo">${MN.map((n,i)=>`<option value="${i}" ${i===M?'selected':''}>${n}</option>`).join('')}</select>`:''}</div></div>
+<div class="row mu" style="margin:8px 0 12px;gap:16px"><span><i class="cl d" style="display:inline-block;width:14px;height:14px;vertical-align:middle"></i> Completed</span><span><i class="cl m" style="display:inline-block;width:14px;height:14px;vertical-align:middle"></i> Missed</span><span><i class="cl x" style="display:inline-block;width:14px;height:14px;vertical-align:middle"></i> Excluded</span><span><i class="cl" style="display:inline-block;width:14px;height:14px;vertical-align:middle"></i> Future</span><span>Tap any date to cycle: Completed → Missed → Excluded → clear</span></div>${mons.length?tabs:''}<div class="card"><b>Year totals</b><div class="row" style="margin-top:8px">${tot}</div></div>`},
+analytics(){const hs=S.habits.map(h=>({h,r:hRate(h,30)})).sort((a,b)=>b.r-a.r);
+const wk=[...Array(8).keys()].reverse().map(w=>{let c=0;for(let i=0;i<7;i++){const d=addD(T,-(w*7+i));S.habits.forEach(h=>{if(done(h,ymd(d)))c++})}return c});const mx=Math.max(1,...wk);
+const bars=wk.map((v,i)=>`<g><rect x="${i*40+10}" y="${110-v/mx*100}" width="28" height="${v/mx*100}" rx="6" fill="var(--pr)"><title>${v} completions</title></rect><text x="${i*40+24}" y="124" text-anchor="middle">${i===7?'Now':'-'+(7-i)+'w'}</text><text x="${i*40+24}" y="${106-v/mx*100}" text-anchor="middle">${v}</text></g>`).join('');
+const stab=[...Array(12).keys()].reverse().map(w=>{const r=weekRate(w);const k=r>=80?['hi','High']:r>=50?['me2','Medium']:['lo','Low'];return`<div style="text-align:center"><div class="tag ${k[0]}">${k[1]}</div><div class="mu">${r}%</div><div class="mu" style="font-size:10px">${w?'-'+w+'w':'Now'}</div></div>`}).join('');
+const rc=recovery(),C=2*Math.PI*45;
+const mo=[...Array(6).keys()].reverse().map(k=>{const f=new Date(T.getFullYear(),T.getMonth()-k,1),n=new Date(f.getFullYear(),f.getMonth()+1,0).getDate();let c=0;S.habits.forEach(h=>{for(let d=1;d<=n;d++)if(done(h,ymd(new Date(f.getFullYear(),f.getMonth(),d))))c++});return[MN[f.getMonth()],c]});
+const mm=Math.max(1,...mo.map(x=>x[1]));
+const mbar=mo.map((x,i)=>`<g><rect x="${i*54+12}" y="${110-x[1]/mm*100}" width="36" height="${x[1]/mm*100}" rx="6" fill="var(--vi)"><title>${x[1]} completions</title></rect><text x="${i*54+30}" y="124" text-anchor="middle">${x[0]}</text><text x="${i*54+30}" y="${106-x[1]/mm*100}" text-anchor="middle">${x[1]}</text></g>`).join('');
+const wd=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map((n,i)=>{let a=0,b=0;for(let k=1;k<=84;k++){const d=addD(T,-k);if(d.getDay()!==i)continue;const r=dayRate(d);a+=r[0];b+=r[1]}return[n,b?Math.round(100*a/b):0]});
+const wbar=wd.map(x=>`<div class="mu">${x[0]} — ${x[1]}%</div><div class="bar" style="margin:2px 0 6px"><i style="width:${x[1]}%;background:var(--pr)"></i></div>`).join('');
+const pts=[...Array(12).keys()].reverse().map((w,i)=>[i*28+10,100-weekRate(w)*.9]);
+const line=`<polyline fill="none" stroke="var(--ok)" stroke-width="3" points="${pts.map(q=>q.join(',')).join(' ')}"/>`+pts.map(q=>`<circle cx="${q[0]}" cy="${q[1]}" r="4" fill="var(--ok)"/>`).join('');
+const cnt=n=>{let c=0;S.habits.forEach(h=>{for(let i=0;i<n;i++)if(done(h,ymd(addD(T,-i))))c++});return c};
+return`<h1>${tr('nav',3)}</h1><div class="g g3"><div class="card"><h2>Goal performance (30d)</h2>${hs.map(x=>`<div class="mu">${x.h.icon} ${esc(x.h.name)} — ${x.r}%</div><div class="bar" style="margin:2px 0 8px"><i style="width:${x.r}%;background:${x.h.color}"></i></div>`).join('')}</div>
+<div class="card"><h2>Weekly completions</h2><svg viewBox="0 0 330 130" width="100%" role="img" aria-label="Weekly completions bar chart">${bars}</svg></div>
+<div class="card"><h2>Recovery rate</h2><svg viewBox="0 0 120 120" width="150" style="display:block;margin:auto"><circle cx="60" cy="60" r="45" fill="none" stroke="var(--bd)" stroke-width="12"/><circle cx="60" cy="60" r="45" fill="none" stroke="var(--vi)" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C*rc/100} ${C}" transform="rotate(-90 60 60)"/><text x="60" y="66" text-anchor="middle" style="font-size:22px;font-weight:700;fill:var(--tx)">${rc}%</text></svg><p class="mu" style="text-align:center">Share of missed days followed by a return within a week.</p></div></div>
+<div class="card"><h2>Habit stability · last 12 weeks</h2><div class="row" style="justify-content:space-between;overflow-x:auto;flex-wrap:nowrap">${stab}</div></div>
+<div class="g g3"><div class="card"><h2>Monthly completions</h2><svg viewBox="0 0 330 130" width="100%" role="img" aria-label="Monthly completions">${mbar}</svg></div><div class="card"><h2>Best weekdays (12w)</h2>${wbar}</div><div class="card"><h2>Consistency trend (12w)</h2><svg viewBox="0 0 330 110" width="100%" role="img" aria-label="12-week consistency line">${line}</svg></div></div>
+<div class="g g3"><div class="card"><h2>Progress</h2><div class="mu">Today: <b>${cnt(1)}</b> · This week: <b>${cnt(7)}</b><br>Month: <b>${cnt(30)}</b> · Year: <b>${cnt(365)}</b><br>Total completed: <b>${Object.values(S.logs).reduce((a,l)=>a+Object.keys(l).length,0)}</b></div></div>
+<div class="card"><h2>🏆 Best performing</h2>${hs.slice(0,3).map(x=>`<div>${x.h.icon} ${esc(x.h.name)} <b>${x.r}%</b></div>`).join('')}</div>
+<div class="card"><h2>⚠️ Needs improvement</h2>${hs.slice(-3).reverse().map(x=>`<div>${x.h.icon} ${esc(x.h.name)} <b>${x.r}%</b></div>`).join('')}</div></div>`},
+goals(){return`<div class="row sb"><h1>${tr('nav',4)}</h1></div><div class="card"><div class="row"><input id="gt" placeholder="New goal…" style="flex:1;min-width:160px"><input id="gd" type="date"><button class="b p" data-a="gadd">Add goal</button></div></div>
+<div class="g g2">${S.goals.map(g=>{const late=!g.done&&g.due&&g.due<TD;return`<div class="card"><div class="row sb"><b style="${g.done?'text-decoration:line-through':''}">${esc(g.title)}</b><input type="checkbox" aria-label="Completed" data-a="gdone" data-id="${g.id}" ${g.done?'checked':''}></div><div class="mu">Deadline: ${g.due||'none'} ${late?'<span class="tag lo">Overdue</span>':''}</div>
+<input type="range" min="0" max="100" value="${g.pr}" data-c="gpr" data-id="${g.id}" style="width:100%"><div class="row sb mu"><span>${g.pr}%</span><button class="b d" data-a="gdel" data-id="${g.id}">Delete</button></div></div>`}).join('')}</div>`},
+premium(){const x=premiumText();return`<h1>${x[0]}</h1><p class="mu">${x[1]}</p><div class="card hero" style="margin-top:16px"><div class="mu" style="color:#eee">${x[2]}</div><div style="font-size:42px;font-weight:800;margin:4px 0">$1 <span style="font-size:16px;font-weight:500">${x[3]}</span></div><div>${x[4]}</div></div><div class="g g2"><div class="card"><h2>${x[5]}</h2><ul><li>${x[6]}</li><li>${x[7]}</li><li>${x[8]}</li><li>${x[9]}</li></ul></div><div class="card"><h2>${x[10]}</h2><span class="tag me2">${x[11]}</span><p>${x[12]}</p><p><b>${x[13]}</b></p><button class="b" type="button" disabled style="opacity:.55;cursor:not-allowed">${x[14]}</button></div></div><div class="card"><h2>${x[15]}</h2><p class="mu">${x[16]}</p></div>`},
+journal(){const e=S.journal[TD]||{};const past=Object.keys(S.journal).sort().reverse().filter(k=>k!==TD);
+return`<h1>${tr('nav',5)}</h1><div class="card"><b>${T.toDateString()}</b><label>Daily reflection</label><textarea id="jr">${esc(e.r||'')}</textarea><label>Achievements</label><textarea id="ja">${esc(e.a||'')}</textarea><label>Things to improve</label><textarea id="ji">${esc(e.i||'')}</textarea><p><button class="b p" data-a="jsave">Save entry</button></p></div>
+<h2 style="margin-top:20px">Past entries</h2>${past.map(k=>`<div class="card" style="margin-bottom:10px"><b>${k}</b><div class="mu">${esc(S.journal[k].r||'')}</div><div>🏆 ${esc(S.journal[k].a||'–')}</div><div>🔧 ${esc(S.journal[k].i||'–')}</div></div>`).join('')||'<div class="mu">No past entries.</div>'}`},
+settings(){const userEmail = localStorage.getItem('lifetrack_user') || 'Unknown User'; return`<h1>Profile & Account</h1><div class="g g2"><div class="card"><h2>${tr('setProfile')}</h2>
+<label for="avf" style="display:inline-flex;gap:16px;align-items:center;cursor:pointer;margin-bottom:16px">
+  <div style="position:relative;width:64px;height:64px">
+    <div class="av" style="width:100%;height:100%;font-size:28px">${getAv()}</div>
+    <div style="position:absolute;bottom:-4px;right:-4px;background:var(--ok);color:#fff;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:20px;border:2px solid var(--sf);line-height:22px">+</div>
+  </div>
+  <div><b style="color:var(--tx);font-size:15px;display:block">${tr('setPhoto')}</b><span class="mu">${tr('setPhotoSub')}</span></div>
+</label>
+<input type="file" id="avf" accept="image/*" style="display:none">
+<label>Display name</label><input id="nm" value="${esc(S.set.name)}"><p><button class="b p" data-a="nsave">${tr('setSave')}</button></p>
+<h2>${tr('setLang')}</h2>
+<select data-c="lang" style="width:100%">
+  <option value="en" ${LANG==='en'?'selected':''}>English</option>
+  <option value="ksw" ${LANG==='ksw'?'selected':''}>Sgaw Karen</option>
+  <option value="th" ${LANG==='th'?'selected':''}>ภาษาไทย</option>
+  <option value="my" ${LANG==='my'?'selected':''}>မြန်မာ</option>
+  <option value="es" ${LANG==='es'?'selected':''}>Español</option>
+  <option value="fr" ${LANG==='fr'?'selected':''}>Français</option>
+  <option value="de" ${LANG==='de'?'selected':''}>Deutsch</option>
+  <option value="pt" ${LANG==='pt'?'selected':''}>Português</option>
+  <option value="id" ${LANG==='id'?'selected':''}>Bahasa Indonesia</option>
+  <option value="vi" ${LANG==='vi'?'selected':''}>Tiếng Việt</option>
+  <option value="zh" ${LANG==='zh'?'selected':''}>中文</option>
+  <option value="ja" ${LANG==='ja'?'selected':''}>日本語</option>
+  <option value="ko" ${LANG==='ko'?'selected':''}>한국어</option>
+  <option value="ar" ${LANG==='ar'?'selected':''}>العربية</option>
+  <option value="hi" ${LANG==='hi'?'selected':''}>हिन्दी</option>
+</select>
+<h2 style="margin-top:16px">Appearance &amp; Themes</h2><label for="theme-choice">Choose your LifeTrack theme</label><select id="theme-choice" data-c="theme" style="width:100%">
+<option value="auto" ${S.set.theme==='auto'?'selected':''}>🌗 System Default</option>
+<option value="light" ${S.set.theme==='light'?'selected':''}>☀️ Classic Light</option>
+<option value="dark" ${S.set.theme==='dark'?'selected':''}>🌙 Classic Dark</option>
+<option value="ocean" ${S.set.theme==='ocean'?'selected':''}>🌊 Ocean Blue</option>
+<option value="forest" ${S.set.theme==='forest'?'selected':''}>🌿 Forest Green</option>
+<option value="sunset" ${S.set.theme==='sunset'?'selected':''}>🌅 Sunset</option>
+<option value="rose" ${S.set.theme==='rose'?'selected':''}>🌸 Rose Pink</option>
+<option value="lavender" ${S.set.theme==='lavender'?'selected':''}>💜 Lavender</option>
+<option value="midnight" ${S.set.theme==='midnight'?'selected':''}>🌌 Midnight</option>
+<option value="emerald" ${S.set.theme==='emerald'?'selected':''}>💎 Emerald</option>
+<option value="contrast" ${S.set.theme==='contrast'?'selected':''}>◐ High Contrast</option>
+</select>
+<section class="settings-section" style="margin-top:16px">
+  <h2>Choose Your Background</h2>
+  <p class="mu">Make LifeTrack beautiful with your favorite pictures.</p>
+  <label for="wallpaper-choice">Background image</label>
+  <select id="wallpaper-choice" style="width:100%">
+    <option value="">Default background</option>
+    <option value="flowers">🌸 Flowers</option>
+    <option value="sakura">🌸 Sakura</option>
+    <option value="mountains">🏔️ Mountains</option>
+    <option value="ocean">🌊 Ocean</option>
+    <option value="forest">🌿 Forest</option>
+    <option value="sunset">🌅 Sunset</option>
+    <option value="night">🌌 Starry Night</option>
+    <option value="clouds">☁️ Clouds</option>
+    <option value="waterfall">💧 Waterfall</option>
+    <option value="autumn">🍂 Autumn</option>
+    <option value="lavender">💜 Lavender</option>
+    <option value="minimal">🌄 Morning</option>
+    <option value="cat">🐱 Cats</option>
+    <option value="beach">🏖️ Tropical Beach</option>
+    <option value="city">🌃 City Lights</option>
+  </select>
+  <button class="b" type="button" onclick="resetImageTheme()" style="margin-top:10px">Reset Background</button>
+</section>
+<h2 style="margin-top:16px">Notifications</h2><label style="display:flex;gap:8px;align-items:center;color:var(--tx)"><input type="checkbox" data-c="notif" ${S.set.notif?'checked':''}> Browser notifications</label><p class="mu">In-app reminders always appear while LifeTrack is open.</p><button class="b" data-a="rtest">Send test reminder</button></div>
+<div class="card"><h2>Habit management</h2>${S.habits.map(h=>`<div class="row sb" style="margin-bottom:6px"><span>${h.icon} ${esc(h.name)}</span><span><button class="b" data-a="edit" data-id="${h.id}">Edit</button> <button class="b d" data-a="del" data-id="${h.id}">Delete</button></span></div>`).join('')}<button class="b p" data-a="add">+ Add habit</button></div>
+${(()=>{const n=S.habits.reduce((a,h)=>a+(h.remind?h.remind.split(',').length:0),0);return`<div class="card" style="grid-column:1/-1"><h2>Reminders · ${n} total</h2><div class="hm" style="margin:0"><table style="width:100%"><tr><th class="n">Habit</th><th style="text-align:left">Times</th><th>No.</th><th style="text-align:left">Add time</th></tr>${S.habits.map(h=>{const l=h.remind?h.remind.split(','):[];return`<tr><td class="n">${h.icon} ${esc(h.name)}</td><td>${l.map(t=>`<span class="tag hi">${t} <a data-a="tdel" data-id="${h.id}" data-v="${t}" role="button" aria-label="Remove ${t}" style="cursor:pointer">✕</a></span>`).join(' ')||'<span class="mu">none</span>'}</td><td style="text-align:center"><b>${l.length}</b></td><td style="white-space:nowrap">${tp('t-'+h.id,'08:00')} <button class="b" data-a="tadd" data-id="${h.id}">Add</button></td></tr>`}).join('')}</table></div></div>`})()}
+<div class="card"><h2>Data</h2><p class="mu">Everything is stored in this browser. Export a backup any time.</p><button class="b" data-a="export">Export JSON</button> <button class="b d" data-a="reset">Reset to demo data</button></div>
+<div class="card"><h2>Account</h2><p class="mu" style="margin-bottom: 12px">Logged in as: <b style="color:var(--tx)">${esc(userEmail)}</b></p><button class="b" data-a="logout">Log Out</button> <button class="b d" data-a="wipe" style="margin-left: 8px;">Erase all my data</button></div></div>`}};
+
+function applyLangUI() {
+  $('#t-login-sub').innerHTML = tr('loginSub');
+  $('#t-email').innerHTML = tr('email');
+  $('#t-pwd').innerHTML = tr('pwd');
+  $('#t-logbtn').innerHTML = tr('logBtn');
+  $('#lang-sel-login').value = LANG;
+  translateUI($('#login-screen'));
+}
+
+function applyTheme(){const t=S.set.theme;if(t==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.dataset.theme=t}
+function render(){
+  applyTheme();
+  applyLangUI();
+  $('#nav').className=sbc?'c':'';
+  const userEmail = localStorage.getItem('lifetrack_user') || 'Local profile';
+  $('#nav').innerHTML=`<div class="brand">🌱 <span>LifeTrack</span></div><div class="me" data-a="nav" data-v="settings" title="Edit Profile & Account" style="${view==='settings'?'background:var(--bg)':''}"><div class="av">${getAv()}</div><div><b>${esc(S.set.name)}</b><br><span class="mu" style="font-size:11px;word-break:break-all">${esc(userEmail)}</span></div></div>`+NAV_IDS.map((n,i)=>`<button class="${view===n?'on':''}" data-a="nav" data-v="${n}"><span>${['🏠','✅','🗓️','📊','🎯','📓','⭐'][i]}</span><span class="l">${tr('nav',i)}</span></button>`).join('')+`<div class="sp"></div><button data-a="col"><span>${sbc?'»':'«'}</span><span class="l">Collapse</span></button>`;
+  $('#bn').innerHTML=NAV_IDS.map((n,i)=>`<button class="${view===n?'on':''}" data-a="nav" data-v="${n}"><span>${['🏠','✅','🗓️','📊','🎯','📓','⭐'][i]}</span><span class="bn-label">${tr('nav',i).split(' ')[0]}</span></button>`).join('');
+  const keep=scrollY;$('#main').innerHTML=`<div class="mobile-head"><div class="brand">🌱 <span>LifeTrack</span></div><a class="profile" href="#" data-a="nav" data-v="settings"><span class="av">${getAv()}</span><span>${esc(S.set.name)}</span></a></div>`+V[view]();
+  translateUI($('#main'));translateUI($('#nav'));translateUI($('#bn'));
+  const wallpaperChoice=$('#wallpaper-choice');if(wallpaperChoice)wallpaperChoice.value=localStorage.getItem('lifetrack_wallpaper')||'';
+  scrollTo(0,keep)
+}
+function cyc(id,ds){const L=S.logs[id]=S.logs[id]||{},h=S.habits.find(x=>x.id===id),v=L[ds],sc=h.days.includes(new Date(ds+'T00:00:00').getDay());if(!v)L[ds]=1;else if(v===1&&sc)L[ds]=3;else if(v===3)L[ds]=2;else delete L[ds];save();render()}
+function ask(t,cb){const d=$('#dlg');d.innerHTML=`<h2>${t}</h2><div class="row"><button class="b d" id="ay">Confirm</button><button class="b" data-a="close">Cancel</button></div>`;$('#ay').onclick=()=>{d.close();cb()};d.showModal()}
+function habitDlg(id){const h=S.habits.find(x=>x.id===id)||{name:'',icon:ICO[0],color:COL[0],desc:'',target:'',days:ALL,remind:''};
+const d=$('#dlg');d.dataset.id=id||'';d.dataset.icon=h.icon;d.dataset.color=h.color;d.dataset.rem=h.remind||'';
+d.innerHTML=`<form><h2>${id?'Edit':'New'} habit</h2><label>Name</label><input id="fn" value="${esc(h.name)}" placeholder="e.g. Morning walk" aria-describedby="fe" oninput="document.getElementById('fe').textContent=''"><div id="fe" role="alert" style="color:#dc2626;font-size:13px;min-height:18px"></div><label>Description</label><input id="fd" value="${esc(h.desc)}"><label>Daily target</label><input id="ft" value="${esc(h.target)}" placeholder="e.g. 20 minutes">
+<label>Icon</label><div id="fi">${ICO.map(i=>`<span class="sw ${i===h.icon?'on':''}" data-a="pi" data-v="${i}" style="background:var(--bg);text-align:center;line-height:20px">${i}</span>`).join('')}</div>
+<label>Color</label><div id="fc">${COL.map(c=>`<span class="sw ${c===h.color?'on':''}" data-a="pc" data-v="${c}" style="background:${c}"></span>`).join('')}</div>
+<label>Schedule</label><div class="row">${['Su','Mo','Tu','We','Th','Fr','Sa'].map((n,i)=>`<label style="display:flex;gap:4px;align-items:center;margin:0"><input type="checkbox" class="fs" value="${i}" ${h.days.includes(i)?'checked':''}>${n}</label>`).join('')}</div>
+<label>Reminder times</label><div id="rt" class="row"></div><div class="row" style="margin-top:6px">${tp('fr','08:00')}<button class="b" type="button" data-a="radd">Add time</button></div><div class="row" style="margin-top:6px">${[['07:00','🌅 Morning'],['12:00','☀️ Noon'],['18:00','🌆 Evening'],['21:00','🌙 Night']].map(q=>`<button type="button" class="b" data-a="rpre" data-v="${q[0]}">${q[1]}</button>`).join('')}</div><div class="row" style="margin-top:16px"><button class="b p" type="submit">Save</button><button class="b" type="button" data-a="close">Cancel</button></div></form>`;
+rchips();d.querySelector('form').onsubmit=e=>{e.preventDefault();if(!$('#fn').value.trim()){$('#fe').textContent='Please give your habit a name, then press Save.';$('#fn').focus();return}const days=[...d.querySelectorAll('.fs:checked')].map(x=>+x.value);const o={name:$('#fn').value.trim(),desc:$('#fd').value,target:$('#ft').value,icon:d.dataset.icon,color:d.dataset.color,days:days.length?days:ALL,remind:d.dataset.rem};
+if(id)Object.assign(S.habits.find(x=>x.id===id),o);else S.habits.push({id:uid(),...o});save();d.close();render()};d.showModal()}
+
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el)return;const a=el.dataset.a,id=el.dataset.id,v=el.dataset.v;
+if(a==='nav'){view=v;render();scrollTo(0,0)}else if(a==='col'){sbc=!sbc;render()}
+else if(a==='tg')toggle(id,TD);else if(a==='cell')cyc(id,el.dataset.d);
+else if(a==='add')habitDlg();else if(a==='edit')habitDlg(id);
+else if(a==='del'){ask('Delete this habit and its history?',()=>{S.habits=S.habits.filter(h=>h.id!==id);delete S.logs[id];save();render()})}
+else if(a==='close')$('#dlg').close();
+else if(a==='logout'){localStorage.removeItem('lifetrack_user');location.reload()}
+else if(a==='radd'){const t=getT('fr'),d=$('#dlg');if(t){const l=d.dataset.rem?d.dataset.rem.split(','):[];if(!l.includes(t))l.push(t);d.dataset.rem=l.sort().join(',');rchips();$('#rt').insertAdjacentHTML('beforeend','<span class="mu">Added ✓</span>');setTimeout(rchips,900)}else $('#fr').focus()}
+else if(a==='rpre'){const d=$('#dlg'),l=d.dataset.rem?d.dataset.rem.split(','):[];if(!l.includes(v))l.push(v);d.dataset.rem=l.sort().join(',');rchips()}
+else if(a==='rdel'){const d=$('#dlg');d.dataset.rem=d.dataset.rem.split(',').filter(t=>t!==v).join(',');rchips()}
+else if(a==='rdone'){S.logs[id]=S.logs[id]||{};S.logs[id][TD]=1;save();el.closest('.card').remove();render()}
+else if(a==='rsn'){snz.push({id,at:Date.now()+600000});el.closest('.card').remove()}
+else if(a==='rx')el.closest('.card').remove();
+else if(a==='tadd'){const t=getT('t-'+id),h=S.habits.find(x=>x.id===id);if(t){const l=h.remind?h.remind.split(','):[];if(!l.includes(t))l.push(t);h.remind=l.sort().join(',');save();render()}}
+else if(a==='tdel'){const h=S.habits.find(x=>x.id===id);h.remind=h.remind.split(',').filter(t=>t!==v).join(',');save();render()}
+else if(a==='rtest'){if(S.set.notif&&window.Notification)Notification.requestPermission();remind(S.habits[0]||{id:'x',icon:'⏰',name:'Test reminder',target:''})}
+else if(a==='pi'||a==='pc'){const d=$('#dlg');d.dataset[a==='pi'?'icon':'color']=v;el.parentNode.querySelectorAll('.sw').forEach(s=>s.classList.toggle('on',s===el))}
+else if(a==='yr'){Y+=+v;render()}
+else if(a==='gadd'){const t=$('#gt').value.trim();if(t){S.goals.push({id:uid(),title:t,due:$('#gd').value,pr:0,done:false});save();render()}}
+else if(a==='gdone'){const g=S.goals.find(x=>x.id===id);g.done=el.checked;if(g.done)g.pr=100;save();render()}
+else if(a==='gdel'){S.goals=S.goals.filter(x=>x.id!==id);save();render()}
+else if(a==='jsave'){S.journal[TD]={r:$('#jr').value,a:$('#ja').value,i:$('#ji').value};save();el.textContent='Saved ✓'}
+else if(a==='nsave'){S.set.name=$('#nm').value||'You';save();render()}
+else if(a==='export'){const b=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});const l=document.createElement('a');l.href=URL.createObjectURL(b);l.download='lifetrack-export.json';l.click()}
+else if(a==='reset'){ask('Replace everything with demo data?',()=>{S=seed();save();render()})}
+else if(a==='wipe'){ask('Erase all data? This cannot be undone.',()=>{S={habits:[],logs:{},goals:[],journal:{},set:{name:'You',theme:'auto',notif:false}};save();render()})}});
+
+document.addEventListener('change',e=>{const el=e.target,c=el.dataset.c;
+if(el.id==='avf'){const f=el.files[0];if(f){const r=new FileReader();r.onload=ev=>{const img=new Image();img.onload=()=>{const cv=document.createElement('canvas'),ctx=cv.getContext('2d');const sz=Math.min(img.width,img.height,300);cv.width=cv.height=sz;ctx.drawImage(img,(img.width-sz)/2,(img.height-sz)/2,sz,sz,0,0,sz,sz);S.set.avatar=cv.toDataURL('image/jpeg',0.8);save();render()};img.src=ev.target.result};r.readAsDataURL(f)}return}
+if(!c)return;
+if(c==='lang'){LANG=el.value;localStorage.setItem('lifetrack_lang',LANG);applyLangUI();if(!$('#app').classList.contains('hidden'))render()}
+else if(c==='av'){AV=el.value;render()}else if(c==='mo'){M=+el.value;render()}
+else if(c==='theme'){S.set.theme=el.value;save();render()}
+else if(c==='notif'){S.set.notif=el.checked;if(el.checked&&window.Notification)Notification.requestPermission();save()}
+else if(c==='gpr'){const g=S.goals.find(x=>x.id===el.dataset.id);g.pr=+el.value;g.done=g.pr===100;save();render()}});
+
+const fired=new Set();let snz=[];
+function tp(id,def){const[H,Mi]=def.split(':').map(Number),h12=H%12||12,o=(a,sel,f)=>a.map(x=>`<option value="${x}" ${x===sel?'selected':''}>${f(x)}</option>`).join('');
+return`<span id="${id}" style="white-space:nowrap"><select aria-label="Hour">${o([...Array(12)].map((_,i)=>i+1),h12,x=>x)}</select> : <select aria-label="Minute">${o([...Array(60).keys()],Mi,x=>p(x))}</select> <select aria-label="AM or PM">${o(['AM','PM'],H<12?'AM':'PM',x=>x)}</select></span>`}
+function getT(id){const s=document.querySelectorAll('#'+id+' select'),h=+s[0].value%12+(s[2].value==='PM'?12:0);return p(h)+':'+p(+s[1].value)}
+function rchips(){const d=$('#dlg'),l=d.dataset.rem?d.dataset.rem.split(','):[];$('#rt').innerHTML=l.map(t=>`<span class="tag hi">${t} <a data-a="rdel" data-v="${t}" role="button" aria-label="Remove ${t}" style="cursor:pointer">✕</a></span>`).join('')||'<span class="mu">No reminders yet</span>'}
+function remind(h){let b=$('#rm');if(!b){b=document.createElement('div');b.id='rm';b.style.cssText='position:fixed;right:12px;bottom:84px;z-index:20;display:flex;flex-direction:column;gap:8px;max-width:320px';document.body.appendChild(b)}
+const c=document.createElement('div');c.className='card';c.innerHTML=`<b>⏰ ${h.icon} ${esc(h.name)}</b><div class="mu">Target: ${esc(h.target)}</div><div class="row" style="margin-top:8px"><button class="b p" data-a="rdone" data-id="${h.id}">Done</button><button class="b" data-a="rsn" data-id="${h.id}">Snooze 10m</button><button class="b" data-a="rx">Dismiss</button></div>`;b.appendChild(c);
+if(S.set.notif&&window.Notification&&Notification.permission==='granted')try{new Notification('LifeTrack',{body:h.icon+' '+h.name+' — '+h.target})}catch(e){}}
+setInterval(()=>{const n=new Date(),m=n.getHours()*60+n.getMinutes(),ds=ymd(n);
+S.habits.forEach(h=>{if(!h.remind||!h.days.includes(n.getDay())||done(h,ds))return;h.remind.split(',').forEach(t=>{const[x,y]=t.split(':'),at=+x*60+ +y,k=h.id+ds+t;if(m>=at&&m-at<=5&&!fired.has(k)){fired.add(k);remind(h)}})});
+snz=snz.filter(z=>{if(Date.now()<z.at)return true;const h=S.habits.find(q=>q.id===z.id);if(h&&!done(h,ds))remind(h);return false})},15000);
+
+const checkAuth = () => {
+  const user = localStorage.getItem('lifetrack_user');
+
+  if (!user) {
+    $('#login-screen').classList.remove('hidden');
+    $('#app').classList.add('hidden');
+    $('#bn').classList.add('hidden');
+    applyLangUI();
+  } else {
+    $('#login-screen').classList.add('hidden');
+    $('#app').classList.remove('hidden');
+    $('#bn').classList.remove('hidden');
+    render();
+  }
+};
+
+$('#login-form').onsubmit = (e) => {
+  e.preventDefault();
+  localStorage.setItem('lifetrack_user', $('#login-email').value);
+  checkAuth();
+};
+
+checkAuth();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(error => {
+      console.warn('App offline support could not be enabled:', error);
+    });
+  });
+}
+</script></body></html>
+<!-- LIFE TRACK IMAGE THEMES -->
+
+<style>
+:root {
+  --theme-image: none;
+  --theme-overlay: rgba(10, 20, 35, 0.45);
+}
+
+/* Background image */
+body {
+  background: transparent !important;
+  position: relative;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(var(--theme-overlay), var(--theme-overlay)),
+    var(--theme-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s ease;
+}
+
+/* Glass effect for cards */
+.card,
+.panel,
+.sidebar,
+header,
+.modal {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Theme selector */
+.theme-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.theme-option {
+  border: 2px solid transparent;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.25s;
+  background: var(--sf, white);
+}
+
+.theme-option:hover {
+  transform: translateY(-4px);
+}
+
+.theme-option.active {
+  border-color: #4f9cf9;
+  box-shadow: 0 0 0 3px rgba(79,156,249,.2);
+}
+
+.theme-option img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+}
+
+.theme-option span {
+  display: block;
+  padding: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tx, #222);
+}
+</style>
+
+
+
+<script>
+const lifeTrackWallpapers = {
+  flowers: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1920",
+  sakura: "https://images.unsplash.com/photo-1522383225653-ed111181a951?w=1920",
+  mountains: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920",
+  ocean: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920",
+  forest: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920",
+  sunset: "https://images.unsplash.com/photo-1472120435266-53107fd0c44a?w=1920",
+  night: "https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?w=1920",
+  clouds: "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?w=1920",
+  waterfall: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=1920",
+  autumn: "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1920",
+  lavender: "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=1920",
+  minimal: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1920",
+  cat: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=1920",
+  beach: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1920",
+  city: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1920"
+};
+
+function setImageTheme(name) {
+  const image = lifeTrackWallpapers[name];
+  if (!image) return;
+
+  document.documentElement.style.setProperty(
+    "--theme-image",
+    `url("${image}")`
+  );
+
+  localStorage.setItem("lifetrack_wallpaper", name);
+}
+
+function resetImageTheme() {
+  document.documentElement.style.setProperty(
+    "--theme-image",
+    "none"
+  );
+
+  localStorage.removeItem("lifetrack_wallpaper");
+  const choice = document.getElementById("wallpaper-choice");
+  if (choice) choice.value = "";
+}
+
+document.addEventListener("change", event => {
+  if (event.target.id === "wallpaper-choice") {
+    if (event.target.value) setImageTheme(event.target.value);
+    else resetImageTheme();
+  }
+});
+
+/* Restore saved wallpaper */
+const savedWallpaper =
+  localStorage.getItem("lifetrack_wallpaper");
+
+if (savedWallpaper && lifeTrackWallpapers[savedWallpaper]) {
+  setImageTheme(savedWallpaper);
+}
+</script>
